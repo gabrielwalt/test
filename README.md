@@ -39,5 +39,6 @@ After implementing or refining the prototype, update this section:
 | **Derived from MHTML** | | DOM structure, Spectrum tokens, embedded CSS, class names |
 | **Derived from HTML** | | Fallback structure, labels, region order |
 | **Inferred from screenshots** | | Spacing, typography, colours, hierarchy |
+| **Spectrum tokens-v2** | @spectrum-web-components/styles | Gray/blue scales, spacing, corner radius, component heights, focus rings |
 | **Approximate** | | Regions that are placeholder or best-guess |
 | **Replace with real app code** | | What should be swapped for production implementation |

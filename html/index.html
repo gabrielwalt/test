@@ -4,66 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adobe Experience Manager</title>
+  <!-- Adobe Clean via Adobe Fonts (use your kit ID) or system fallback -->
   <style>
     /* ======================================================
        ExMod Console UI Prototype
-       Spectrum design tokens + shell layout
+       Adobe Spectrum design tokens (tokens-v2 light theme)
        ====================================================== */
 
-    /* --- Spectrum Design Tokens (Light Theme) --- */
+    /* --- Spectrum Design Tokens (Light Theme, Medium Scale) --- */
     :root {
-      /* Gray scale */
-      --spectrum-gray-50: #fff;
-      --spectrum-gray-75: #fdfdfd;
-      --spectrum-gray-100: #f8f8f8;
-      --spectrum-gray-200: #e6e6e6;
-      --spectrum-gray-300: #d5d5d5;
-      --spectrum-gray-400: #b1b1b1;
-      --spectrum-gray-500: #909090;
-      --spectrum-gray-600: #6d6d6d;
-      --spectrum-gray-700: #464646;
-      --spectrum-gray-800: #222;
-      --spectrum-gray-900: #000;
+      /* Gray scale (Spectrum tokens-v2) */
+      --spectrum-gray-25: #ffffff;
+      --spectrum-gray-50: #f8f8f8;
+      --spectrum-gray-75: #f3f3f3;
+      --spectrum-gray-100: #e9e9e9;
+      --spectrum-gray-200: #e1e1e1;
+      --spectrum-gray-300: #dadada;
+      --spectrum-gray-400: #c6c6c6;
+      --spectrum-gray-500: #8f8f8f;
+      --spectrum-gray-600: #717171;
+      --spectrum-gray-700: #505050;
+      --spectrum-gray-800: #292929;
+      --spectrum-gray-900: #131313;
+      --spectrum-gray-1000: #000000;
 
-      /* Semantic aliases */
-      --bg-default: var(--spectrum-gray-100);
-      --bg-surface: var(--spectrum-gray-50);
-      --text-primary: #292929;
-      --text-secondary: #505050;
-      --text-bold: #131313;
-      --text-muted: var(--spectrum-gray-500);
-      --border-default: #e1e1e1;
-      --border-light: #dadada;
-      --icon-primary: #292929;
-      --icon-muted: var(--spectrum-gray-600);
+      /* Blue (Spectrum accent) */
+      --spectrum-blue-100: #f5f9ff;
+      --spectrum-blue-200: #e5f0fe;
+      --spectrum-blue-300: #cbe2fe;
+      --spectrum-blue-800: #4b75ff;
+      --spectrum-blue-900: #3b63fb;
+      --spectrum-blue-1000: #274dea;
 
-      /* Accent */
-      --accent-blue: #0d66d0;
-      --accent-blue-hover: #0b5ab8;
-      --accent-blue-light: #e5f0fe;
-      --accent-blue-medium: #cbe2fe;
+      /* Notice (orange - for in-progress) */
+      --spectrum-orange-600: #fc7d00;
 
-      /* Chat */
-      --chat-ai-bg: #f3f3f3;
-      --chat-user-bg: #cbe2fe;
-      --task-completed-bg: #e5f0fe;
+      /* Semantic aliases (Spectrum naming) */
+      --spectrum-background-layer-1-color: var(--spectrum-gray-50);
+      --spectrum-background-pasteboard-color: var(--spectrum-gray-100);
+      --spectrum-neutral-content-color-default: var(--spectrum-gray-800);
+      --spectrum-neutral-subdued-content-color-default: var(--spectrum-gray-700);
+      --spectrum-accent-background-color-default: var(--spectrum-blue-900);
+      --spectrum-accent-background-color-hover: var(--spectrum-blue-1000);
+      --spectrum-blue-subtle-background-color-default: var(--spectrum-blue-200);
+
+      /* Layout tokens */
+      --spectrum-spacing-75: 4px;
+      --spectrum-spacing-100: 8px;
+      --spectrum-spacing-200: 12px;
+      --spectrum-spacing-300: 16px;
+      --spectrum-spacing-400: 24px;
+      --spectrum-spacing-500: 32px;
+      --spectrum-component-height-100: 32px;
+      --spectrum-component-height-150: 28px;
+      --spectrum-component-height-200: 40px;
+      --spectrum-component-height-300: 48px;
+      --spectrum-static-size-100: 8px;
+      --spectrum-static-size-200: 16px;
+      --spectrum-static-size-300: 24px;
+      --spectrum-static-size-400: 32px;
+      --spectrum-static-size-500: 40px;
+      --spectrum-static-size-600: 48px;
+      --spectrum-icon-size-100: 18px;
+      --spectrum-icon-size-200: 20px;
+      --spectrum-icon-size-300: 24px;
+      --spectrum-corner-radius-75: 4px;
+      --spectrum-corner-radius-100: 8px;
+      --spectrum-corner-radius-500: 8px;
+      --spectrum-border-width-100: 1px;
+      --spectrum-border-width-200: 2px;
+      --spectrum-focus-indicator-color: var(--spectrum-blue-800);
+      --spectrum-focus-indicator-thickness: 2px;
+      --spectrum-focus-indicator-gap: 2px;
 
       /* Font */
-      --font-sans: "Adobe Clean", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif;
-      --font-mono: "Source Code Pro", Monaco, Consolas, monospace;
-
-      /* Spacing */
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 12px;
-      --space-lg: 16px;
-      --space-xl: 24px;
-      --space-2xl: 32px;
+      --spectrum-sans-serif-font-family: "adobe-clean", "Adobe Clean", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --spectrum-font-size-75: 12px;
+      --spectrum-font-size-100: 14px;
+      --spectrum-font-size-200: 16px;
+      --spectrum-font-size-300: 18px;
+      --spectrum-medium-font-weight: var(--spectrum-medium-font-weight);
+      --spectrum-bold-font-weight: 700;
 
       /* Layout */
-      --header-height: 56px;
-      --nav-width: 48px;
-      --main-radius: 16px;
+      --header-height: 72px;
+      --nav-width: 70px;
+      --main-radius: var(--spectrum-corner-radius-100);
+      --spectrum-document-tree-width: 260px;
+      --spectrum-document-tree-min-width: 150px;
+      --spectrum-chat-grid-min: 380px;
+      --spectrum-task-list-max-height: 480px;
+      --spectrum-chat-textarea-min-height: 44px;
+      --spectrum-chat-textarea-max-height: 120px;
+      --spectrum-disclaimer-max-width: 280px;
+      --spectrum-nav-item-size: 38px;
+      --spectrum-nav-item-left-offset: calc((var(--nav-width) - var(--spectrum-nav-item-size)) / 2);
     }
 
     /* --- Reset --- */
@@ -71,111 +106,193 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      font-family: var(--font-sans);
-      font-size: 14px;
+      font-family: var(--spectrum-sans-serif-font-family);
+      font-size: var(--spectrum-font-size-100);
       line-height: 1.5;
-      color: var(--text-primary);
-      background: var(--bg-default);
+      color: var(--spectrum-neutral-content-color-default);
+      background: rgb(248, 248, 248);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- Utility --- */
+    /* --- Spectrum-style buttons (ActionButton) --- */
+    /* Spectrum-style icon buttons: 32px touch target, 18px icon (spectrum workflow size S) */
     .icon-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
       border: none;
       background: transparent;
       cursor: pointer;
-      border-radius: 4px;
-      color: var(--icon-primary);
+      border-radius: var(--spectrum-corner-radius-100);
+      color: var(--spectrum-neutral-content-color-default);
       padding: 0;
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
-    .icon-btn:hover { background: rgba(0,0,0,0.06); }
-    .icon-btn svg { width: 20px; height: 20px; fill: currentColor; }
+    .icon-btn:hover { background: rgba(0,0,0,0.04); }
+    .icon-btn:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .icon-btn svg {
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+    .icon-btn svg.spectrum-icon-outline {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     .icon-btn-sm {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
+      width: var(--spectrum-component-height-150);
+      height: var(--spectrum-component-height-150);
       border: none;
       background: transparent;
       cursor: pointer;
-      border-radius: 4px;
-      color: var(--icon-primary);
+      border-radius: var(--spectrum-corner-radius-100);
+      color: var(--spectrum-neutral-content-color-default);
       padding: 0;
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
-    .icon-btn-sm:hover { background: rgba(0,0,0,0.06); }
-    .icon-btn-sm svg { width: 16px; height: 16px; fill: currentColor; }
+    .icon-btn-sm:hover { background: rgba(0,0,0,0.04); }
+    .icon-btn-sm:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .icon-btn-sm svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+    .icon-btn-sm svg.spectrum-icon-outline {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .preview-toolbar .toolbar-back-btn {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
+    }
+    .toolbar-back-btn svg {
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+    }
 
     /* --- Layout Shell --- */
     .exmod-root {
       display: flex;
       flex-direction: column;
       height: 100vh;
-      background: var(--bg-default);
+      background: rgb(248, 248, 248);
     }
 
     /* === GLOBAL HEADER === */
     .exmod-header {
       height: var(--header-height);
-      background: var(--bg-surface);
+      min-height: var(--header-height);
+      max-height: var(--header-height);
+      padding: 0 16px;
+      box-sizing: border-box;
+      background: var(--spectrum-background-layer-1-color);
+      border: none;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 var(--space-lg);
       flex-shrink: 0;
+      flex-grow: 0;
       z-index: 100;
     }
     .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: var(--spectrum-spacing-200);
+    }
+    .header-left > .icon-btn:first-child {
+      width: var(--spectrum-nav-item-size);
+      height: var(--spectrum-nav-item-size);
+      margin-left: 0;
     }
     .header-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--spectrum-spacing-200);
+      margin-left: calc(
+        (var(--nav-width) - var(--spectrum-spacing-300) - var(--spectrum-component-height-100) - var(--spectrum-spacing-200))
+        - (((var(--nav-width) - var(--spectrum-component-height-100)) / 2) - var(--spectrum-spacing-300))
+      );
     }
     .header-brand .adobe-logo {
-      width: 28px;
-      height: 27px;
+      width: var(--spectrum-component-height-200);
+      height: var(--spectrum-component-height-200);
       flex-shrink: 0;
     }
     .header-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-bold);
+      font-size: var(--spectrum-font-size-200);
+      font-weight: var(--spectrum-bold-font-weight);
+      color: var(--spectrum-gray-900);
       white-space: nowrap;
     }
     .header-right {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: var(--spectrum-spacing-75);
     }
-    .header-right .request-support {
-      font-size: 13px;
-      color: var(--text-secondary);
+    .request-support-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-75);
+      font-size: var(--spectrum-font-size-75);
+      color: var(--spectrum-neutral-subdued-content-color-default);
       text-decoration: none;
-      margin-right: 8px;
-      white-space: nowrap;
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-100);
+      border-radius: var(--spectrum-corner-radius-100);
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
-    .header-right .request-support:hover { text-decoration: underline; }
+    .request-support-link:hover {
+      background: rgba(0,0,0,0.04);
+      color: var(--spectrum-neutral-content-color-default);
+    }
+    .request-support-link .spectrum-icon-outline {
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
     .user-avatar {
-      width: 28px;
-      height: 28px;
+      width: var(--spectrum-component-height-150);
+      height: var(--spectrum-component-height-150);
       border-radius: 50%;
       background: var(--spectrum-gray-300);
+      color: var(--spectrum-gray-600);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
-    .user-avatar svg { width: 16px; height: 16px; fill: var(--spectrum-gray-600); }
+    .user-avatar svg {
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     /* === SHELL: NAV + MAIN === */
     .exmod-shell {
@@ -183,52 +300,73 @@
       flex: 1;
       min-height: 0;
       padding: 0 0 0 0;
+      position: relative;
+      z-index: 101;
     }
 
-    /* === LEFT NAV SIDEBAR === */
+    /* === LEFT NAV SIDEBAR (Spectrum Sidenav style) === */
     .exmod-nav {
       width: var(--nav-width);
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 8px 0;
-      background: var(--bg-surface);
+      padding: var(--spectrum-spacing-100) 0;
+      background: var(--spectrum-background-layer-1-color);
+      border: none;
     }
     .nav-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
+      width: var(--spectrum-nav-item-size);
+      height: var(--spectrum-nav-item-size);
+      border-radius: var(--spectrum-corner-radius-100);
       cursor: pointer;
-      color: var(--icon-primary);
+      color: var(--spectrum-neutral-content-color-default);
       text-decoration: none;
-      margin-bottom: 2px;
+      margin-bottom: var(--spectrum-spacing-75);
       position: relative;
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
-    .nav-item:hover { background: rgba(0,0,0,0.06); }
-    .nav-item svg { width: 20px; height: 20px; fill: currentColor; }
+    .nav-item:hover { background: rgba(0,0,0,0.04); }
+    .nav-item:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .nav-item svg {
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+    .nav-item svg.nav-icon-outline,
+    .nav-item svg.spectrum-icon-outline {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
     .nav-item.nav-selected {
-      background: var(--spectrum-gray-900);
-      color: var(--spectrum-gray-100);
+      background: var(--spectrum-gray-800);
+      color: var(--spectrum-gray-50);
     }
-    .nav-item.nav-selected:hover { background: var(--spectrum-gray-800); }
+    .nav-item.nav-selected:hover { background: var(--spectrum-gray-700); }
     .nav-separator {
-      width: 24px;
-      height: 1px;
+      width: var(--spectrum-icon-size-300);
+      height: var(--spectrum-border-width-100);
       background: var(--spectrum-gray-200);
-      margin: 6px 0;
+      margin: calc(var(--spectrum-spacing-200) - var(--spectrum-spacing-75)) 0 var(--spectrum-spacing-200) 0;
     }
     .nav-spacer { flex: 1; }
     .nav-section-label {
-      font-size: 9px;
-      font-weight: 600;
+      font-size: var(--spectrum-font-size-75);
+      font-weight: var(--spectrum-bold-font-weight);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
+      letter-spacing: 0.06em;
+      color: var(--spectrum-gray-500);
+      margin-bottom: var(--spectrum-spacing-75);
       writing-mode: vertical-rl;
       display: none; /* hidden in collapsed state */
     }
@@ -237,11 +375,14 @@
     .exmod-main {
       flex: 1;
       min-width: 0;
-      background: var(--bg-surface);
-      border-radius: var(--main-radius) var(--main-radius) 0 0;
-      box-shadow: rgba(0,0,0,0.12) 0px 1px 3px 0px, rgba(0,0,0,0.06) 0px 1px 2px 0px;
+      background: white;
       overflow: hidden;
-      margin-right: 4px;
+      margin-right: 16px;
+      border-radius: 16px 16px 0 0;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      border-left: 1px solid rgb(225, 225, 225);
+      border-top-width: 0;
+      border-right: 1px solid rgb(225, 225, 225);
       display: flex;
       flex-direction: column;
     }
@@ -249,11 +390,10 @@
     /* === GRID: CHAT + PREVIEW === */
     .exmod-grid {
       display: grid;
-      grid-template-columns: minmax(380px, 33.33%) 1fr;
+      grid-template-columns: minmax(var(--spectrum-chat-grid-min), 33.33%) 1fr;
       grid-template-rows: 1fr;
-      column-gap: 12px;
+      column-gap: 0;
       height: 100%;
-      padding: var(--space-2xl);
       overflow: hidden;
     }
 
@@ -268,84 +408,120 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      border: 1px solid var(--border-light);
-      border-radius: 10px;
+      border-right: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
       overflow: hidden;
       position: relative;
-      background: var(--bg-surface);
+      background: #fff;
     }
 
-    /* Task Progress Header */
+    /* Task Progress - ad-hoc sticky section at top */
+    .task-progress-sticky {
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #fff;
+      border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
     .chat-header {
-      padding: 12px 16px;
+      padding: var(--spectrum-spacing-200);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-default);
-      flex-shrink: 0;
-      background: var(--bg-surface);
-      z-index: 5;
+      cursor: pointer;
+      transition: background-color 0.13s ease-out;
+    }
+    .chat-header:hover {
+      background: var(--spectrum-gray-75);
     }
     .chat-header h3 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-bold);
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-bold-font-weight);
+      color: var(--spectrum-gray-900);
     }
     .chat-header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--spectrum-spacing-100);
+    }
+    .task-progress-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--spectrum-icon-size-200);
+      height: var(--spectrum-icon-size-200);
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      transition: transform 0.2s ease;
+    }
+    .task-progress-toggle svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+    }
+    .task-progress-sticky.collapsed .task-progress-toggle {
+      transform: rotate(180deg);
     }
     .completed-count {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 500;
+      font-size: var(--spectrum-font-size-75);
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      font-weight: var(--spectrum-medium-font-weight);
     }
 
-    /* Progress Bar */
+    /* Task Progress collapsible content */
+    .task-progress-content {
+      max-height: var(--spectrum-task-list-max-height);
+      overflow: hidden;
+      transition: max-height 0.25s ease-out;
+    }
+    .task-progress-sticky.collapsed .task-progress-content {
+      max-height: 0 !important;
+      overflow: hidden;
+    }
+    /* Progress Bar (Spectrum Meter style) */
     .progress-bar-wrap {
-      padding: 0 16px;
+      padding: 0 var(--spectrum-spacing-300);
       flex-shrink: 0;
-      margin-top: 10px;
-      margin-bottom: 6px;
+      margin-top: var(--spectrum-spacing-200);
+      margin-bottom: var(--spectrum-spacing-75);
     }
     .progress-bar {
-      height: 4px;
+      height: var(--spectrum-spacing-75);
       background: var(--spectrum-gray-200);
-      border-radius: 4px;
+      border-radius: var(--spectrum-corner-radius-75);
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
-      background: var(--accent-blue);
-      border-radius: 4px;
+      background: var(--spectrum-accent-background-color-default);
+      border-radius: var(--spectrum-corner-radius-75);
       transition: width 0.3s ease;
     }
 
     /* Task List */
     .task-list {
-      padding: 8px 12px;
+      padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
       flex-shrink: 0;
-      border-bottom: 1px solid var(--border-default);
+      border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
     }
     .task-section {
-      margin-bottom: 4px;
+      margin-bottom: var(--spectrum-spacing-75);
     }
     .task-section-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 4px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-bold);
+      gap: var(--spectrum-spacing-100);
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-75);
+      font-size: var(--spectrum-font-size-75);
+      font-weight: var(--spectrum-bold-font-weight);
+      color: var(--spectrum-gray-900);
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: var(--spectrum-corner-radius-100);
+      transition: background-color 0.13s ease-out;
     }
-    .task-section-header:hover { background: rgba(0,0,0,0.03); }
+    .task-section-header:hover { background: rgba(0,0,0,0.04); }
     .task-indicator {
-      width: 18px;
-      height: 18px;
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
@@ -353,127 +529,229 @@
       flex-shrink: 0;
     }
     .task-indicator.completed {
-      background: var(--accent-blue);
+      background: var(--spectrum-accent-background-color-default);
     }
-    .task-indicator.completed svg { width: 10px; height: 10px; fill: #fff; }
+    .task-indicator.completed svg { width: var(--spectrum-spacing-200); height: var(--spectrum-spacing-200); fill: #fff; }
     .task-indicator.in-progress {
-      background: #e8a817;
+      background: var(--spectrum-orange-600);
     }
-    .task-indicator.in-progress svg { width: 10px; height: 10px; fill: #fff; }
+    .task-indicator.in-progress svg { width: var(--spectrum-spacing-200); height: var(--spectrum-spacing-200); fill: #fff; }
     .task-indicator.pending {
-      border: 2px solid var(--spectrum-gray-400);
+      border: var(--spectrum-border-width-200) solid var(--spectrum-gray-400);
       background: transparent;
     }
     .task-items {
-      padding-left: 30px;
-      margin-bottom: 4px;
+      padding-left: var(--spectrum-spacing-400);
+      margin-bottom: var(--spectrum-spacing-75);
     }
     .task-item {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
-      padding: 3px 0;
-      font-size: 12px;
-      color: var(--text-secondary);
+      gap: var(--spectrum-spacing-100);
+      padding: var(--spectrum-spacing-75) 0;
+      font-size: var(--spectrum-font-size-75);
+      color: var(--spectrum-neutral-subdued-content-color-default);
       line-height: 1.4;
     }
     .task-item .check-icon {
-      width: 14px;
-      height: 14px;
+      width: var(--spectrum-font-size-100);
+      height: var(--spectrum-font-size-100);
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: var(--spectrum-border-width-100);
     }
-    .task-item .check-icon.done { color: var(--accent-blue); }
+    .task-item .check-icon.done { color: var(--spectrum-accent-background-color-default); }
     .task-item .check-icon.pending { color: var(--spectrum-gray-400); }
 
     /* Chat Messages Area */
     .chat-messages {
       flex: 1;
+      min-height: 0;
       overflow-y: auto;
-      padding: 12px;
+      padding: var(--spectrum-spacing-200);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: var(--spectrum-spacing-100);
     }
     .chat-msg {
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 13px;
+      padding: var(--spectrum-spacing-200) var(--spectrum-spacing-200);
+      border-radius: var(--spectrum-corner-radius-100);
+      font-size: var(--spectrum-font-size-75);
       line-height: 1.5;
       max-width: 90%;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
     }
     .chat-msg.ai {
-      background: var(--chat-ai-bg);
+      background: var(--spectrum-gray-75);
       align-self: flex-start;
-      color: var(--text-primary);
+      color: var(--spectrum-neutral-content-color-default);
     }
     .chat-msg.user {
-      background: var(--chat-user-bg);
+      background: var(--spectrum-blue-subtle-background-color-default);
       align-self: flex-end;
-      color: var(--text-bold);
+      color: var(--spectrum-gray-900);
     }
     .chat-msg.system {
-      background: #fffbe6;
-      border: 1px solid #f0e4a6;
+      background: var(--spectrum-gray-75);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
       align-self: stretch;
       max-width: 100%;
-      font-size: 12px;
+      font-size: var(--spectrum-font-size-75);
     }
-    .chat-msg strong { font-weight: 600; }
+    .chat-msg strong { font-weight: var(--spectrum-bold-font-weight); }
     .chat-msg code {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      background: rgba(0,0,0,0.06);
-      padding: 1px 4px;
-      border-radius: 3px;
+      font-family: "Source Code Pro", Monaco, Consolas, monospace;
+      font-size: var(--spectrum-font-size-75);
+      background: rgba(0,0,0,0.04);
+      padding: var(--spectrum-border-width-100) var(--spectrum-spacing-75);
+      border-radius: var(--spectrum-corner-radius-75);
     }
 
     /* Chat Input */
     .chat-input {
-      padding: 12px;
-      border-top: 1px solid var(--border-default);
+      padding: var(--spectrum-spacing-200);
+      border-top: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
       flex-shrink: 0;
-      background: var(--bg-surface);
+      background: #fff;
     }
     .chat-input-wrap {
       display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      padding: 8px 12px;
-      background: var(--bg-surface);
+      flex-direction: column;
+      gap: var(--spectrum-spacing-100);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      border-radius: var(--spectrum-corner-radius-100);
+      padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
+      background: #fff;
+      transition: border-color 0.13s ease-out, box-shadow 0.13s ease-out;
     }
-    .chat-input-wrap:focus-within { border-color: var(--accent-blue); }
-    .chat-input textarea {
+    .chat-input-wrap:focus-within {
+      border-color: var(--spectrum-gray-800);
+      box-shadow: 0 0 0 1px var(--spectrum-gray-800);
+    }
+    .chat-input-body {
       flex: 1;
+      min-height: 0;
+    }
+    .chat-input textarea {
+      width: 100%;
       border: none;
       outline: none;
       resize: none;
-      font-family: var(--font-sans);
-      font-size: 13px;
+      font-family: var(--spectrum-sans-serif-font-family);
+      font-size: var(--spectrum-font-size-100);
       line-height: 1.5;
-      color: var(--text-primary);
+      color: var(--spectrum-neutral-content-color-default);
       background: transparent;
-      min-height: 20px;
-      max-height: 100px;
+      min-height: var(--spectrum-chat-textarea-min-height);
+      max-height: var(--spectrum-chat-textarea-max-height);
+      padding: 0;
     }
-    .chat-input textarea::placeholder { color: var(--text-muted); }
-    .chat-send-btn {
-      width: 28px;
-      height: 28px;
+    .chat-input textarea::placeholder { color: var(--spectrum-gray-500); }
+    .chat-input-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-100);
+    }
+    .chat-disclaimer {
+      font-size: var(--spectrum-font-size-75);
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      line-height: 1.4;
+      flex-shrink: 0;
+      max-width: var(--spectrum-disclaimer-max-width);
+    }
+    .chat-disclaimer a {
+      color: inherit;
+      text-decoration: underline;
+    }
+    .chat-disclaimer a:hover {
+      color: inherit;
+    }
+    .chat-actions-spacer {
+      flex: 1;
+      min-width: 0;
+    }
+    .chat-attach-btn {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
       border: none;
-      background: var(--accent-blue);
-      border-radius: 6px;
+      border-radius: var(--spectrum-corner-radius-100);
+      background: transparent;
+      color: var(--spectrum-neutral-subdued-content-color-default);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
-    .chat-send-btn svg { width: 14px; height: 14px; fill: #fff; }
-    .chat-send-btn:hover { background: var(--accent-blue-hover); }
+    .chat-attach-btn:hover {
+      background: rgba(0,0,0,0.04);
+      color: var(--spectrum-neutral-content-color-default);
+    }
+    .chat-mode-btn {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      border-radius: var(--spectrum-corner-radius-100);
+      background: #fff;
+      color: var(--spectrum-neutral-content-color-default);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
+    }
+    .chat-mode-btn:hover {
+      background: var(--spectrum-gray-75);
+    }
+    .chat-attach-btn svg,
+    .chat-mode-btn svg,
+    .chat-send-btn svg {
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+    }
+    .chat-mode-switcher {
+      display: flex;
+      gap: 0;
+    }
+    .chat-mode-switcher .chat-mode-btn {
+      border-radius: 0;
+      border-right: none;
+    }
+    .chat-mode-switcher .chat-mode-btn:first-child {
+      border-radius: var(--spectrum-corner-radius-100) 0 0 var(--spectrum-corner-radius-100);
+    }
+    .chat-mode-switcher .chat-mode-btn:last-child {
+      border-radius: 0 var(--spectrum-corner-radius-100) var(--spectrum-corner-radius-100) 0;
+      border-right: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+    }
+    .chat-mode-btn.active {
+      background: var(--spectrum-gray-800);
+      border-color: var(--spectrum-gray-800);
+      color: #fff;
+    }
+    .chat-mode-switcher .chat-mode-btn.active {
+      border-right-color: var(--spectrum-gray-800);
+    }
+    .chat-send-btn {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
+      border: none;
+      background: var(--spectrum-accent-background-color-default);
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 0.13s ease-out;
+    }
+    .chat-send-btn:hover { background: var(--spectrum-accent-background-color-hover); }
+    .chat-send-btn:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
 
     /* === PREVIEW PANEL (Right) === */
     .exmod-preview {
@@ -488,148 +766,207 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 0 10px 0;
+      width: 100%;
+      min-height: calc(var(--spectrum-component-height-100) + 2 * var(--spectrum-spacing-300));
+      padding: var(--spectrum-spacing-300);
       flex-shrink: 0;
+      background: white;
+      border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
+      box-sizing: border-box;
     }
     .toolbar-left {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--spectrum-spacing-100);
       min-width: 0;
+      flex: 1;
     }
-    .page-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-bold);
+    .preview-toolbar .page-title {
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-bold-font-weight);
+      color: var(--spectrum-gray-900);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
+      height: var(--spectrum-component-height-100);
+      line-height: var(--spectrum-component-height-100);
     }
     .toolbar-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--spectrum-spacing-200);
       flex-shrink: 0;
     }
-    .btn-accent {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: var(--accent-blue);
-      color: #fff;
-      border: none;
-      border-radius: 16px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      font-family: var(--font-sans);
-    }
-    .btn-accent:hover { background: var(--accent-blue-hover); }
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 10px;
-      background: transparent;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-      font-family: var(--font-sans);
-    }
-    .btn-ghost:hover { background: rgba(0,0,0,0.04); }
-    .btn-ghost svg { width: 14px; height: 14px; fill: currentColor; }
-
-    /* Toolbar separator */
-    .toolbar-sep {
-      width: 100%;
-      height: 1px;
-      background: var(--border-default);
-      margin-bottom: 10px;
-      flex-shrink: 0;
-    }
-
-    /* Preview breadcrumbs row */
-    .preview-breadcrumbs {
+    .toolbar-preview-only {
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 0 0 10px 0;
-      font-size: 12px;
-      color: var(--text-muted);
-      flex-shrink: 0;
+      gap: var(--spectrum-spacing-200);
     }
-    .preview-breadcrumbs span { cursor: pointer; }
-    .preview-breadcrumbs span:hover { color: var(--text-primary); text-decoration: underline; }
-    .breadcrumb-sep { color: var(--spectrum-gray-400); margin: 0 2px; cursor: default !important; }
-    .breadcrumb-sep:hover { text-decoration: none !important; color: var(--spectrum-gray-400) !important; }
+    .preview-toolbar.view-mode-document .toolbar-preview-only {
+      display: none;
+    }
+    /* Spectrum Button - fill (primary) */
+    .preview-toolbar .btn-accent {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spectrum-spacing-100);
+      height: var(--spectrum-component-height-100);
+      padding: 0 var(--spectrum-spacing-300);
+      background: var(--spectrum-accent-background-color-default);
+      color: var(--spectrum-gray-25);
+      border: none;
+      border-radius: 9999px;
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-medium-font-weight);
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: var(--spectrum-sans-serif-font-family);
+      transition: background-color 0.13s ease-out;
+    }
+    .btn-accent:hover { background: var(--spectrum-accent-background-color-hover); }
+    .btn-accent:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    /* Spectrum Button - outline (secondary) */
+    .preview-toolbar .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-75);
+      height: var(--spectrum-component-height-100);
+      padding: 0 var(--spectrum-spacing-200);
+      background: transparent;
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      border-radius: var(--spectrum-corner-radius-100);
+      font-size: var(--spectrum-font-size-75);
+      font-weight: var(--spectrum-medium-font-weight);
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: var(--spectrum-sans-serif-font-family);
+      transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
+    }
+    .btn-ghost:hover {
+      background: rgba(0,0,0,0.04);
+      border-color: var(--spectrum-gray-400);
+    }
+    .btn-ghost:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .btn-ghost svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Toolbar separator (removed - toolbar has its own border) */
+    .toolbar-sep {
+      display: none;
+    }
+
+    .breadcrumb-sep {
+      color: var(--spectrum-gray-600);
+      font-size: 1.15em;
+      margin: 0 var(--spectrum-focus-indicator-gap);
+      cursor: default !important;
+    }
+    .breadcrumb-sep:hover { text-decoration: none !important; color: var(--spectrum-gray-600) !important; }
 
     /* Preview Content Area */
     .preview-content {
       display: flex;
       flex: 1;
       min-height: 0;
-      gap: 10px;
+      gap: 0;
     }
 
-    /* Document Tree Sidebar */
+    /* Document Tree Sidebar (Spectrum FileTree style) */
     .document-tree {
-      width: 240px;
-      min-width: 150px;
+      width: var(--spectrum-document-tree-width);
+      min-width: var(--spectrum-document-tree-min-width);
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      transition: width 0.2s ease-out, min-width 0.2s ease-out;
+    }
+    .preview-content.tree-collapsed .document-tree {
+      width: 0;
+      min-width: 0;
       overflow: hidden;
     }
     .tree-breadcrumbs {
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border-default);
+      gap: var(--spectrum-spacing-75);
+      padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-medium-font-weight);
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
       flex-shrink: 0;
     }
     .tree-breadcrumbs .crumb {
       cursor: pointer;
-      color: var(--text-secondary);
+      color: var(--spectrum-neutral-subdued-content-color-default);
     }
     .tree-breadcrumbs .crumb:hover { text-decoration: underline; }
+    .tree-breadcrumbs .crumb-current {
+      cursor: default;
+      color: var(--spectrum-neutral-content-color-default);
+    }
+    .tree-breadcrumbs .crumb-current:hover { text-decoration: none; }
     .file-list {
       flex: 1;
       overflow-y: auto;
-      padding: 8px 6px;
+      padding: var(--spectrum-spacing-100) var(--spectrum-spacing-75);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spectrum-spacing-200);
     }
     .file-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 8px;
-      border-radius: 6px;
+      gap: var(--spectrum-spacing-100);
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-100);
+      border-radius: var(--spectrum-corner-radius-100);
       cursor: pointer;
-      font-size: 13px;
-      color: var(--text-primary);
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-medium-font-weight);
+      color: var(--spectrum-neutral-content-color-default);
+      transition: background-color 0.13s ease-out;
     }
     .file-item:hover { background: rgba(0,0,0,0.04); }
     .file-item.selected {
       background: var(--spectrum-gray-800);
       color: var(--spectrum-gray-50);
+      font-weight: var(--spectrum-bold-font-weight);
     }
-    .file-item svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+    .file-item svg {
+      width: var(--spectrum-icon-size-200);
+      height: var(--spectrum-icon-size-200);
+      min-width: var(--spectrum-icon-size-200);
+      max-width: var(--spectrum-icon-size-200);
+      flex-shrink: 0;
+      flex-grow: 0;
+      aspect-ratio: 1;
+      fill: currentColor;
+    }
 
     /* Iframe Container */
     .iframe-container {
       flex: 1;
       min-width: 0;
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      background: var(--spectrum-gray-100);
+      border: none;
+      background: var(--spectrum-background-pasteboard-color);
       overflow: hidden;
       position: relative;
       display: flex;
@@ -637,46 +974,238 @@
       justify-content: center;
     }
     .iframe-placeholder {
-      color: var(--spectrum-gray-400);
-      font-size: 14px;
+      color: var(--spectrum-gray-500);
+      font-size: var(--spectrum-font-size-100);
       text-align: center;
     }
     .iframe-placeholder svg {
-      width: 48px;
-      height: 48px;
+      width: var(--spectrum-component-height-300);
+      height: var(--spectrum-component-height-300);
       fill: var(--spectrum-gray-300);
-      margin-bottom: 8px;
+      margin-bottom: var(--spectrum-spacing-100);
       display: block;
       margin-left: auto;
       margin-right: auto;
     }
 
-    /* Viewport Toggles */
-    .viewport-toggles {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding-top: 4px;
-      flex-shrink: 0;
-    }
-    .viewport-btn {
-      width: 28px;
-      height: 28px;
+    /* Viewport Toggles (inline in toolbar) */
+    .preview-toolbar .viewport-btn {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
       border: none;
       background: transparent;
-      border-radius: 6px;
+      border-radius: var(--spectrum-corner-radius-100);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--spectrum-gray-500);
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
-    .viewport-btn:hover { background: rgba(0,0,0,0.06); color: var(--text-primary); }
+    .viewport-btn:hover { background: rgba(0,0,0,0.04); color: var(--spectrum-neutral-content-color-default); }
+    .viewport-btn:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
     .viewport-btn.active {
       background: var(--spectrum-gray-800);
       color: var(--spectrum-gray-50);
     }
-    .viewport-btn svg { width: 16px; height: 16px; fill: currentColor; }
+    .viewport-btn svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Toolbar icon buttons (32x32) */
+    .toolbar-icon-btn {
+      position: relative;
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
+      border: none;
+      background: transparent;
+      border-radius: var(--spectrum-corner-radius-100);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
+    }
+    .toolbar-icon-btn:hover { background: rgba(0,0,0,0.04); color: var(--spectrum-neutral-content-color-default); }
+    .toolbar-icon-btn:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .toolbar-icon-btn svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Spectrum-style tooltip (immediate on hover, fixed to escape overflow) */
+    [data-tooltip] {
+      position: relative;
+    }
+    [data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: fixed;
+      left: var(--tt-x, 0);
+      top: var(--tt-y, 0);
+      transform: translate(-50%, calc(-100% - 6px));
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-100);
+      background: var(--spectrum-gray-800);
+      color: var(--spectrum-gray-50);
+      font-size: var(--spectrum-font-size-75);
+      font-weight: var(--spectrum-medium-font-weight);
+      white-space: nowrap;
+      border-radius: var(--spectrum-corner-radius-75);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.1s ease-out, visibility 0.1s ease-out;
+      z-index: 10000;
+    }
+    [data-tooltip]:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive dropdown */
+    .responsive-dropdown {
+      position: relative;
+    }
+    .responsive-dropdown-trigger {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
+      border: none;
+      background: transparent;
+      border-radius: var(--spectrum-corner-radius-100);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
+    }
+    .responsive-dropdown-trigger:hover { background: rgba(0,0,0,0.04); color: var(--spectrum-neutral-content-color-default); }
+    .responsive-dropdown-trigger:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .responsive-dropdown-trigger svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: currentColor;
+    }
+    .responsive-dropdown-overlay {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: var(--spectrum-spacing-75);
+      min-width: 140px;
+      background: white;
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      border-radius: var(--spectrum-corner-radius-100);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 100;
+      overflow: hidden;
+    }
+    .responsive-dropdown.open .responsive-dropdown-overlay {
+      display: block;
+    }
+    .responsive-dropdown-option {
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-100);
+      width: 100%;
+      padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
+      border: none;
+      background: transparent;
+      font-size: var(--spectrum-font-size-100);
+      color: var(--spectrum-neutral-content-color-default);
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--spectrum-sans-serif-font-family);
+      transition: background-color 0.13s ease-out;
+    }
+    .responsive-dropdown-option:hover {
+      background: var(--spectrum-gray-75);
+    }
+    .responsive-dropdown-option svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* View mode switcher (Preview / Document view) */
+    .view-mode-switcher {
+      display: flex;
+      gap: 0;
+    }
+    .view-mode-btn {
+      width: var(--spectrum-component-height-100);
+      height: var(--spectrum-component-height-100);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      border-radius: 0;
+      background: #fff;
+      color: var(--spectrum-neutral-subdued-content-color-default);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.13s ease-out, border-color 0.13s ease-out, color 0.13s ease-out;
+    }
+    .view-mode-btn:first-child {
+      border-radius: var(--spectrum-corner-radius-100) 0 0 var(--spectrum-corner-radius-100);
+      border-right: none;
+    }
+    .view-mode-btn:last-child {
+      border-radius: 0 var(--spectrum-corner-radius-100) var(--spectrum-corner-radius-100) 0;
+      border-left: none;
+    }
+    .view-mode-btn:hover { background: var(--spectrum-gray-75); }
+    .view-mode-btn.active {
+      background: var(--spectrum-gray-800);
+      border-color: var(--spectrum-gray-800);
+      color: var(--spectrum-gray-50);
+    }
+    .view-mode-btn svg {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      fill: currentColor;
+    }
+
+    /* Upload content button */
+    .btn-upload {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--spectrum-component-height-100);
+      padding: 0 var(--spectrum-spacing-300);
+      background: var(--spectrum-accent-background-color-default);
+      color: var(--spectrum-gray-25);
+      border: none;
+      border-radius: 9999px;
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-bold-font-weight);
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: var(--spectrum-sans-serif-font-family);
+      transition: background-color 0.13s ease-out;
+    }
+    .btn-upload:hover { background: var(--spectrum-accent-background-color-hover); }
+    .btn-upload:focus-visible {
+      outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+      outline-offset: var(--spectrum-focus-indicator-gap);
+    }
   </style>
 </head>
 <body>
@@ -685,32 +1214,24 @@
     <!-- ====== GLOBAL HEADER ====== -->
     <header class="exmod-header">
       <div class="header-left">
-        <button class="icon-btn" aria-label="Show navigation menu">
-          <svg viewBox="0 0 20 20" fill="currentColor">
-            <rect x="3" y="4" width="14" height="1.5" rx="0.75"/>
-            <rect x="3" y="9.25" width="14" height="1.5" rx="0.75"/>
-            <rect x="3" y="14.5" width="14" height="1.5" rx="0.75"/>
-          </svg>
+        <button class="icon-btn" data-tooltip="Open menu" aria-label="Show navigation menu">
+          <svg class="spectrum-icon-outline" viewBox="0 0 24 24"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
         </button>
         <div class="header-brand">
-          <svg class="adobe-logo" viewBox="0 0 240 234" fill="none">
-            <path d="M192 179h-29a6 6 0 0 1-6-4l-31-72a1 1 0 0 0-2 0l-20 46a2 2 0 0 0 2 2h21a3 3 0 0 1 3 2l9 21a4 4 0 0 1-3 5H59a4 4 0 0 1-3-5l49-117a7 7 0 0 1 6-4h28a7 7 0 0 1 6 4l50 117a4 4 0 0 1-3 5Z" fill="#fa0f00"/>
-          </svg>
+          <img class="adobe-logo" src="adobe-logo.svg" alt="Adobe" width="40" height="40">
           <h3 class="header-title">Adobe Experience Manager</h3>
         </div>
       </div>
       <div class="header-right">
-        <a href="#" class="request-support">Request support</a>
+        <a href="#" class="request-support-link" aria-label="Request support">
+          <svg class="spectrum-icon-outline" viewBox="0 0 24 24"><path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/></svg>
+          <span>Request support</span>
+        </a>
         <button class="icon-btn" aria-label="Notifications">
-          <svg viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10 2a5.5 5.5 0 0 0-5.5 5.5v3.25L3.22 13.1a.75.75 0 0 0 .53 1.28h12.5a.75.75 0 0 0 .53-1.28L15.5 10.75V7.5A5.5 5.5 0 0 0 10 2zM8.25 15.75a1.75 1.75 0 1 0 3.5 0h-3.5z"/>
-          </svg>
+          <svg class="spectrum-icon-outline" viewBox="0 0 24 24"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
         </button>
         <div class="user-avatar" aria-label="User menu">
-          <svg viewBox="0 0 20 20" fill="currentColor">
-            <circle cx="10" cy="7" r="3.5"/>
-            <path d="M3 16.5c0-3 3.13-5.5 7-5.5s7 2.5 7 5.5"/>
-          </svg>
+          <svg class="spectrum-icon-outline" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
         </div>
       </div>
     </header>
@@ -721,22 +1242,21 @@
       <!-- ====== LEFT NAV SIDEBAR ====== -->
       <nav class="exmod-nav" aria-label="Navigation">
         <!-- Home -->
-        <a class="nav-item" aria-label="Home" title="Home">
-          <svg viewBox="0 0 20 20"><path d="M10 2.5L2 9h2.5v7.5h4V12h3v4.5h4V9H18L10 2.5z"/></svg>
+        <a class="nav-item" data-tooltip="Home" aria-label="Home" title="Home">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path d="m17.13086,5.73438L11.38086,1.26172c-.8125-.63086-1.94922-.63184-2.76172.00098L2.86914,5.73438h-.00098c-.54395.42285-.86816,1.08691-.86816,1.77637v8.23926c0,1.24023,1.00977,2.25,2.25,2.25h11.5c1.24023,0,2.25-1.00977,2.25-2.25V7.51074c0-.68945-.32422-1.35352-.86914-1.77637Zm-5.63086,10.76562h-3v-4.75c0-.41309.33691-.75.75-.75h1.5c.41309,0,.75.33691.75.75v4.75Zm5-.75c0,.41309-.33691.75-.75.75h-2.75v-4.75c0-1.24023-1.00977-2.25-2.25-2.25h-1.5c-1.24023,0-2.25,1.00977-2.25,2.25v4.75h-2.75c-.41309,0-.75-.33691-.75-.75V7.51074c0-.22949.1084-.45117.28906-.59277l5.75-4.4707c.27246-.21191.65137-.20898.92188-.00098l5.74902,4.47168c.18164.1416.29004.36328.29004.59277v8.23926Z" fill="currentColor"/></svg>
         </a>
         <div class="nav-separator"></div>
         <!-- Content (selected) -->
-        <a class="nav-item nav-selected" aria-label="Content" title="Content">
-          <svg viewBox="0 0 20 20"><path d="M5 2.5h7l4 4V17a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 5 17V3a.5.5 0 0 1 .5-.5zM11.5 2.5V7H16"/></svg>
+        <a class="nav-item nav-selected" data-tooltip="Content" aria-label="Content" title="Content">
+          <svg class="spectrum-icon-outline" viewBox="0 0 24 24"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
         </a>
         <!-- Code -->
-        <a class="nav-item" aria-label="Code" title="Code">
-          <svg viewBox="0 0 20 20"><path d="M7 5.5L2.5 10 7 14.5M13 5.5l4.5 4.5-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <a class="nav-item" data-tooltip="Code" aria-label="Code" title="Code">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M17.7465,9.5305l-4.0965,4.16a.5.5,0,0,1-.70709.00541l-.00541-.00541-.4465-.4535a.503.503,0,0,1,0-.7L15.9715,9,12.492,5.4645a.503.503,0,0,1,0-.7l.4465-.4535a.5.5,0,0,1,.70709-.00541L13.651,4.311l4.0955,4.16A.76151.76151,0,0,1,17.7465,9.5305Z"/><path fill="currentColor" d="M.2535,8.4695,4.35,4.3095a.5.5,0,0,1,.70709-.00541l.00541.00541.4465.4535a.503.503,0,0,1,0,.7L2.0285,9,5.508,12.5355a.503.503,0,0,1,0,.7l-.4465.4535a.5.5,0,0,1-.70709.00541L4.349,13.689.2535,9.5305A.76151.76151,0,0,1,.2535,8.4695Z"/><path fill="currentColor" d="M7.7445,14.8435h-.572a.5.5,0,0,1-.483-.6295L9.7855,2.6935a.5.5,0,0,1,.483-.3705h.5525a.5.5,0,0,1,.483.627L8.2275,14.473A.5.5,0,0,1,7.7445,14.8435Z"/></svg>
         </a>
-        <div class="nav-spacer"></div>
         <!-- Settings -->
-        <a class="nav-item" aria-label="Settings" title="Settings">
-          <svg viewBox="0 0 20 20"><path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/><path d="M16.07 12.32l.9 1.56a.5.5 0 0 1-.12.64l-1.5 1.18a.5.5 0 0 1-.62.02l-1.25-.84a5.5 5.5 0 0 1-1.36.78l-.3 1.5a.5.5 0 0 1-.49.4h-2.66a.5.5 0 0 1-.49-.4l-.3-1.5a5.5 5.5 0 0 1-1.36-.78l-1.25.84a.5.5 0 0 1-.62-.02l-1.5-1.18a.5.5 0 0 1-.12-.64l.9-1.56a5.5 5.5 0 0 1 0-1.64l-.9-1.56a.5.5 0 0 1 .12-.64l1.5-1.18a.5.5 0 0 1 .62-.02l1.25.84a5.5 5.5 0 0 1 1.36-.78l.3-1.5a.5.5 0 0 1 .49-.4h2.66a.5.5 0 0 1 .49.4l.3 1.5a5.5 5.5 0 0 1 1.36.78l1.25-.84a.5.5 0 0 1 .62.02l1.5 1.18a.5.5 0 0 1 .12.64l-.9 1.56a5.5 5.5 0 0 1 0 1.64z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+        <a class="nav-item" data-tooltip="Settings" aria-label="Settings" title="Settings">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M10.004 12.589c-.888 0-1.753-.46-2.228-1.283-.708-1.228-.286-2.801.94-3.51.593-.343 1.285-.433 1.949-.256.663.178 1.216.604 1.56 1.197.342.594.433 1.286.256 1.949-.178.663-.603 1.216-1.197 1.56-.403.233-.845.343-1.28.343m-.93-2.033c.295.508.949.683 1.46.39.247-.142.424-.373.498-.648s.036-.564-.107-.81c-.143-.248-.373-.425-.649-.499-.275-.073-.563-.035-.81.107-.51.295-.686.949-.391 1.46"/><path fill="currentColor" d="M6.907 18.318c-.34 0-.682-.085-.992-.264l-.82-.473c-.893-.514-1.25-1.65-.811-2.583l.58-1.233q-.398-.546-.672-1.161l-1.357-.113C1.806 12.406 1 11.531 1 10.5v-.946c0-1.033.805-1.91 1.833-1.994l1.354-.115q.138-.313.302-.6.165-.285.37-.564l-.581-1.23c-.441-.932-.087-2.068.807-2.584l.82-.474c.893-.516 2.054-.259 2.643.59l.777 1.118q.667-.074 1.341 0l.775-1.119c.59-.85 1.751-1.11 2.644-.594l.82.473c.894.516 1.25 1.651.81 2.584l-.58 1.232q.399.548.672 1.161l1.357.113c1.028.085 1.834.96 1.835 1.991v.947c.001 1.031-.803 1.907-1.832 1.994l-1.355.115q-.136.313-.303.6-.164.284-.368.563l.58 1.23c.441.93.087 2.067-.806 2.584l-.82.475c-.894.518-2.054.258-2.643-.591l-.778-1.118q-.67.073-1.34 0l-.777 1.12c-.384.555-1.012.857-1.65.857M6.904 3.225q-.13 0-.248.066l-.82.475c-.223.129-.312.412-.202.645l.78 1.65c.125.267.083.583-.108.807-.204.24-.373.477-.517.726q-.212.37-.368.81c-.098.278-.35.472-.644.496l-1.819.154c-.262.022-.458.236-.458.499v.946c0 .258.202.477.459.498l1.82.15c.293.025.546.22.644.498.2.56.497 1.076.887 1.532.192.223.234.54.109.806l-.778 1.653c-.11.233-.02.517.203.645l.82.474c.224.13.514.063.66-.148l1.041-1.502c.168-.242.46-.369.753-.31.588.108 1.184.11 1.77 0 .29-.055.585.066.753.31l1.042 1.499c.147.21.439.276.66.147l.821-.474c.226-.13.314-.409.201-.646l-.779-1.65c-.126-.267-.084-.583.108-.807.204-.24.373-.477.515-.725h.001c.143-.248.263-.512.369-.81.098-.279.35-.473.644-.497l1.819-.153c.256-.022.458-.24.458-.499l-.001-.947c0-.262-.197-.476-.459-.498l-1.819-.15c-.294-.025-.546-.22-.645-.498-.198-.56-.496-1.075-.887-1.532-.191-.224-.234-.54-.108-.806l.777-1.653c.11-.233.02-.517-.203-.646l-.82-.473c-.224-.127-.514-.061-.66.15l-1.04 1.5c-.168.243-.46.368-.753.31-.591-.11-1.188-.11-1.77 0-.292.052-.586-.067-.754-.31L7.316 3.439c-.096-.137-.253-.213-.412-.213"/></svg>
         </a>
       </nav>
 
@@ -748,17 +1268,18 @@
           <div class="exmod-chat">
             <div class="chat-container">
 
-              <!-- Header -->
-              <div class="chat-header">
-                <h3>Task Progress</h3>
-                <div class="chat-header-right">
-                  <span class="completed-count">2/6 completed</span>
-                  <button class="icon-btn-sm" aria-label="Collapse task progress">
-                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
+              <!-- Task Progress (sticky, collapsible) -->
+              <div class="task-progress-sticky" id="task-progress">
+                <div class="chat-header" id="task-progress-toggle" role="button" tabindex="0" aria-expanded="true" aria-controls="task-progress-content">
+                  <h3>Task Progress</h3>
+                  <div class="chat-header-right">
+                    <span class="completed-count">2/6 completed</span>
+                    <span class="task-progress-toggle" aria-hidden="true">
+                      <svg class="spectrum-icon-outline" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="miter"><path d="M5 16L12 8L19 16"/></svg>
+                    </span>
+                  </div>
                 </div>
-              </div>
-
+                <div class="task-progress-content" id="task-progress-content">
               <!-- Progress Bar -->
               <div class="progress-bar-wrap">
                 <div class="progress-bar">
@@ -820,6 +1341,8 @@
                   </div>
                 </div>
               </div>
+                </div>
+              </div>
 
               <!-- Chat Messages -->
               <div class="chat-messages">
@@ -849,10 +1372,27 @@
               <!-- Chat Input -->
               <div class="chat-input">
                 <div class="chat-input-wrap">
-                  <textarea rows="1" placeholder="Ask anything..."></textarea>
-                  <button class="chat-send-btn" aria-label="Send">
-                    <svg viewBox="0 0 14 14"><path d="M1 7h12M8 2l5 5-5 5" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
+                  <div class="chat-input-body">
+                    <textarea rows="2" placeholder="Ask anything..."></textarea>
+                  </div>
+                  <div class="chat-input-actions">
+                    <span class="chat-disclaimer">AI responses may be inaccurate or misleading.<br><a href="#">Please verify all generated responses.</a></span>
+                    <span class="chat-actions-spacer"></span>
+                    <button class="chat-attach-btn" type="button" aria-label="Attach file">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+                    </button>
+                    <div class="chat-mode-switcher">
+                      <button class="chat-mode-btn" type="button" aria-label="Plan mode" title="Plan">
+                        <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M10 2.241c-.414 0-.75-.336-.75-.75v-.7c0-.414.336-.75.75-.75s.75.336.75.75v.7c0 .414-.336.75-.75.75M18.454 10.021h-.7c-.414 0-.75-.335-.75-.75s.336-.75.75-.75h.7c.414 0 .75.336.75.75s-.336.75-.75.75M2.232 10.021h-.7c-.414 0-.75-.335-.75-.75s.336-.75.75-.75h.7c.414 0 .75.336.75.75s-.336.75-.75.75M4.51 4.54c-.192 0-.383-.074-.53-.22l-.495-.496c-.293-.293-.293-.767 0-1.06s.768-.293 1.06 0l.496.495c.293.293.293.767 0 1.06-.146.147-.338.22-.53.22M15.476 4.54c-.193 0-.384-.074-.53-.22-.294-.294-.294-.768 0-1.061l.494-.495c.293-.293.768-.293 1.061 0s.293.767 0 1.06l-.495.495c-.147.147-.338.22-.53.22M16 9.5c0-3.309-2.691-6-6-6s-6 2.691-6 6c0 2.216 1.21 4.15 3.001 5.189L7 14.695V16.5c0 1.654 1.346 3 3 3s3-1.346 3-3v-1.812c1.79-1.04 3-2.973 3-5.188m-4.5 7c0 .827-.673 1.5-1.5 1.5s-1.5-.673-1.5-1.5v-1.198c.48.125.981.198 1.5.198s1.02-.073 1.5-.198zM10 14c-2.481 0-4.5-2.019-4.5-4.5S7.519 5 10 5s4.5 2.019 4.5 4.5S12.481 14 10 14"/></svg>
+                      </button>
+                      <button class="chat-mode-btn active" type="button" aria-label="Execute mode" title="Execute">
+                        <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M15.05 7.2c0-.601-.235-1.167-.658-1.59-.849-.85-2.333-.852-3.183 0L9.388 7.43q-.033.034-.06.069-.037.029-.07.062l-7.599 7.598c-.425.425-.659.99-.659 1.591s.234 1.166.66 1.59.99.66 1.59.66 1.166-.234 1.59-.66l9.55-9.549c.425-.425.66-.99.66-1.59M3.78 17.28c-.283.283-.777.283-1.06 0-.142-.141-.22-.33-.22-.53s.078-.389.22-.53l7.2-7.2 1.065 1.055zm9.55-9.55-1.284 1.285-1.066-1.056 1.29-1.29c.283-.282.777-.283 1.06.002.142.14.22.329.22.53s-.078.388-.22.53M18.706 10.832l-1.261-.499-.203-1.342c-.065-.428-.758-.505-.916-.104l-.499 1.262-1.342.202c-.213.032-.379.203-.403.418s.098.418.299.498l1.262.5.202 1.34c.032.213.203.38.418.404s.418-.098.498-.3l.5-1.26 1.34-.203c.215-.033.38-.204.404-.418s-.099-.42-.299-.498M14.336 3.642l1.262.5.202 1.341c.032.213.204.38.418.403.215.025.418-.097.498-.299l.5-1.26 1.341-.204c.214-.032.379-.203.403-.418s-.098-.419-.299-.498l-1.26-.498-.204-1.342c-.065-.428-.758-.505-.916-.105l-.498 1.263-1.342.201c-.213.032-.38.204-.404.418s.098.418.3.498M5.78 4.69l1.023.406.164 1.088c.026.173.166.307.34.327.173.02.339-.08.404-.243l.405-1.023 1.088-.165c.174-.026.308-.165.328-.339s-.08-.34-.243-.404l-1.023-.404-.165-1.09c-.053-.347-.615-.41-.743-.084l-.405 1.024-1.089.164c-.173.026-.308.165-.327.34-.02.173.079.338.242.403"/></svg>
+                      </button>
+                    </div>
+                    <button class="chat-send-btn" type="button" aria-label="Send">
+                      <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M18.649 9.974c0-.295-.172-.563-.443-.683L4.058 2.933c-.257-.115-.557-.077-.776.098-.22.177-.323.46-.267.736l1.272 6.241-1.222 6.23c-.049.247.03.5.205.675q.031.03.065.058c.221.174.52.211.776.095l14.098-6.408c.268-.122.44-.39.44-.684m-4.243-.747-8.742.027L4.777 4.9zm-9.589 5.87.852-4.344 8.763-.027z"/></svg>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -865,38 +1405,59 @@
             <!-- Toolbar -->
             <div class="preview-toolbar">
               <div class="toolbar-left">
-                <button class="icon-btn-sm" aria-label="Go back">
-                  <svg viewBox="0 0 16 16" fill="currentColor"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="icon-btn-sm toolbar-back-btn" id="document-tree-toggle" type="button" data-tooltip="Toggle document tree" aria-label="Toggle document tree">
+                  <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M9.862 16.455c-.196 0-.393-.077-.54-.23L3.835 10.52c-.28-.29-.28-.749 0-1.039l5.5-5.716c.287-.3.763-.308 1.06-.02.298.286.308.76.02 1.059l-4.999 5.197 4.986 5.184c.289.297.279.772-.02 1.06-.145.14-.332.21-.52.21"/><path fill="currentColor" d="M15.612 16.455c-.196 0-.393-.077-.54-.23L9.585 10.52c-.28-.29-.28-.749 0-1.039l5.5-5.716c.287-.3.763-.308 1.06-.02.298.286.308.76.02 1.059l-4.999 5.197 4.986 5.184c.289.297.279.772-.02 1.06-.145.14-.332.21-.52.21"/></svg>
                 </button>
                 <h3 class="page-title">ups-accelerates-intra-asia-trade-with-capacity-and-speed-enhance</h3>
               </div>
               <div class="toolbar-right">
-                <button class="btn-ghost">
-                  <svg viewBox="0 0 14 14"><path d="M7 1v8M3 5l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10v2.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                  Upload content
+                <div class="toolbar-preview-only">
+                  <button class="toolbar-icon-btn" type="button" data-tooltip="Picker" aria-label="Picker">
+                    <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M18.074 1.6c-.528-.44-1.192-.654-1.883-.587-.685.061-1.306.386-1.745.912-.036.043-5.03 6.019-6.693 8.012-.344.016-.693.067-1.042.164-1.973.546-2.687 2.232-3.315 3.718-.501 1.184-.975 2.302-2.003 2.859-.287.154-.44.476-.38.797.06.319.318.564.641.606.936.12 1.977.208 3.024.208 2.16 0 4.351-.372 5.72-1.594.925-.825 1.385-1.937 1.366-3.306-.001-.063-.02-.122-.024-.184l1.206-1.443c2.103-2.517 5.381-6.443 5.455-6.53.912-1.09.765-2.72-.327-3.631M9.4 15.576c-1.052.94-3.109 1.345-5.865 1.18.554-.725.91-1.57 1.241-2.35.57-1.345 1.06-2.506 2.335-2.86.875-.24 1.732-.112 2.354.353.5.375.79.926.799 1.512.012.927-.27 1.636-.864 2.165m7.853-11.308c-.043.05-3.345 4.002-5.458 6.533l-.634.76c-.218-.32-.472-.619-.797-.862-.273-.204-.574-.36-.89-.484 2.01-2.407 6.059-7.251 6.122-7.325.183-.221.443-.357.73-.383.292-.023.566.062.787.247.456.38.518 1.061.14 1.514"/></svg>
+                  </button>
+                  <div class="responsive-dropdown" id="responsive-dropdown">
+                  <button class="responsive-dropdown-trigger" type="button" data-tooltip="Viewport" aria-label="Viewport" aria-haspopup="true" aria-expanded="false">
+                    <svg class="responsive-icon-desktop" viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M14 18.5H6c-.414 0-.75-.336-.75-.75S5.586 17 6 17h8c.414 0 .75.336.75.75s-.336.75-.75.75M16.75 16H3.25C2.01 16 1 14.99 1 13.75v-8.5C1 4.01 2.01 3 3.25 3h13.5C17.99 3 19 4.01 19 5.25v8.5c0 1.24-1.01 2.25-2.25 2.25M3.25 4.5c-.413 0-.75.337-.75.75v8.5c0 .413.337.75.75.75h13.5c.413 0 .75-.337.75-.75v-8.5c0-.413-.337-.75-.75-.75z"/></svg>
+                    <svg class="responsive-icon-tablet" viewBox="0 0 20 20" focusable="false" style="display:none"><circle cx="5" cy="9.998" r="1" fill="currentColor"/><path fill="currentColor" d="M3.25 2.998h13.5c1.24 0 2.25 1.01 2.25 2.25v9.5c0 1.24-1.01 2.25-2.25 2.25H3.25c-1.24 0-2.25-1.01-2.25-2.25v-9.5c0-1.24 1.01-2.25 2.25-2.25m13.5 12.5c.413 0 .75-.337.75-.75v-9.5c0-.413-.337-.75-.75-.75H3.25c-.413 0-.75.337-.75.75v9.5c0 .413.337.75.75.75z"/></svg>
+                    <svg class="responsive-icon-phone" viewBox="0 0 20 20" focusable="false" style="display:none"><circle cx="10" cy="15" r="1" fill="currentColor"/><path fill="currentColor" d="M13.75 19h-7.5C5.01 19 4 17.99 4 16.75V3.25C4 2.01 5.01 1 6.25 1h7.5C14.99 1 16 2.01 16 3.25v13.5c0 1.24-1.01 2.25-2.25 2.25M6.25 2.5c-.413 0-.75.337-.75.75v13.5c0 .413.337.75.75.75h7.5c.413 0 .75-.337.75-.75V3.25c0-.413-.337-.75-.75-.75z"/></svg>
+                  </button>
+                  <div class="responsive-dropdown-overlay">
+                    <button class="responsive-dropdown-option" data-viewport="desktop">
+                      <svg viewBox="0 0 20 20"><path fill="currentColor" d="M14 18.5H6c-.414 0-.75-.336-.75-.75S5.586 17 6 17h8c.414 0 .75.336.75.75s-.336.75-.75.75M16.75 16H3.25C2.01 16 1 14.99 1 13.75v-8.5C1 4.01 2.01 3 3.25 3h13.5C17.99 3 19 4.01 19 5.25v8.5c0 1.24-1.01 2.25-2.25 2.25M3.25 4.5c-.413 0-.75.337-.75.75v8.5c0 .413.337.75.75.75h13.5c.413 0 .75-.337.75-.75v-8.5c0-.413-.337-.75-.75-.75z"/></svg>
+                      Desktop
+                    </button>
+                    <button class="responsive-dropdown-option" data-viewport="tablet">
+                      <svg viewBox="0 0 20 20"><circle cx="5" cy="9.998" r="1" fill="currentColor"/><path fill="currentColor" d="M3.25 2.998h13.5c1.24 0 2.25 1.01 2.25 2.25v9.5c0 1.24-1.01 2.25-2.25 2.25H3.25c-1.24 0-2.25-1.01-2.25-2.25v-9.5c0-1.24 1.01-2.25 2.25-2.25m13.5 12.5c.413 0 .75-.337.75-.75v-9.5c0-.413-.337-.75-.75-.75H3.25c-.413 0-.75.337-.75.75v9.5c0 .413.337.75.75.75z"/></svg>
+                      Tablet
+                    </button>
+                    <button class="responsive-dropdown-option" data-viewport="phone">
+                      <svg viewBox="0 0 20 20"><circle cx="10" cy="15" r="1" fill="currentColor"/><path fill="currentColor" d="M13.75 19h-7.5C5.01 19 4 17.99 4 16.75V3.25C4 2.01 5.01 1 6.25 1h7.5C14.99 1 16 2.01 16 3.25v13.5c0 1.24-1.01 2.25-2.25 2.25M6.25 2.5c-.413 0-.75.337-.75.75v13.5c0 .413.337.75.75.75h7.5c.413 0 .75-.337.75-.75V3.25c0-.413-.337-.75-.75-.75z"/></svg>
+                      Phone
+                    </button>
+                  </div>
+                  </div>
+                  <button class="toolbar-icon-btn" type="button" data-tooltip="Refresh" aria-label="Refresh">
+                  <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M18.207 3.897c-.406-.094-.809.15-.906.554l-.38 1.575C15.523 3.594 12.919 2.02 10 2.02c-3.685 0-6.875 2.5-7.76 6.08-.099.403.147.81.55.909.4.1.808-.147.907-.55.718-2.907 3.31-4.939 6.303-4.939 2.517 0 4.735 1.447 5.809 3.633l-2.102-.508c-.404-.094-.808.15-.906.553s.15.808.553.905l3.245.785c.125.088.274.142.432.142q.09 0 .18-.021c.048-.012.086-.041.13-.061.069-.019.142-.02.205-.058.17-.104.29-.27.338-.464l.875-3.624c.097-.403-.15-.808-.552-.906M17.21 11.032c-.396-.096-.807.147-.907.55-.718 2.908-3.31 4.94-6.303 4.94-2.517 0-4.735-1.447-5.81-3.634l2.103.508c.403.092.809-.15.906-.553s-.15-.808-.553-.905l-3.255-.787c-.171-.118-.385-.171-.602-.119-.015.004-.026.015-.04.02-.104.013-.205.044-.295.1-.17.103-.29.27-.338.463l-.875 3.624c-.097.403.15.808.552.906q.09.02.177.02c.339 0 .646-.23.729-.574l.38-1.575c1.398 2.432 4.002 4.005 6.921 4.005 3.685 0 6.876-2.5 7.76-6.08.099-.403-.147-.81-.549-.909"/></svg>
+                  </button>
+                </div>
+                <button class="toolbar-icon-btn" type="button" data-tooltip="Delete" aria-label="Delete">
+                  <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M8.249 15.021c-.4 0-.733-.317-.748-.72l-.25-6.5c-.017-.414.307-.763.72-.779H8c.4 0 .733.317.748.72l.25 6.5c.017.414-.307.763-.72.778zM11.751 15.021h-.03c-.413-.016-.737-.365-.72-.779l.25-6.5c.015-.403.348-.72.748-.72h.03c.413.016.737.365.72.779l-.25 6.5c-.015.403-.348.72-.748.72"/><path fill="currentColor" d="M17 4h-3.5v-.75C13.5 2.01 12.49 1 11.25 1h-2.5C7.51 1 6.5 2.01 6.5 3.25V4H3c-.414 0-.75.336-.75.75s.336.75.75.75h.52l.422 10.342C3.99 17.052 4.98 18 6.19 18h7.62c1.211 0 2.2-.948 2.248-2.158L16.48 5.5H17c.414 0 .75-.336.75-.75S17.414 4 17 4m-9-.75c0-.413.337-.75.75-.75h2.5c.413 0 .75.337.75.75V4H8zm6.56 12.531c-.017.404-.346.719-.75.719H6.19c-.404 0-.733-.315-.75-.719L5.02 5.5h9.96z"/></svg>
                 </button>
-                <button class="btn-ghost">
-                  <svg viewBox="0 0 14 14"><path d="M2 3.5h10M5 3.5V2h4v1.5M3 3.5v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Delete
-                </button>
-                <button class="btn-accent">Open in editor</button>
+                <div class="view-mode-switcher">
+                  <button class="view-mode-btn active" type="button" data-view-mode="preview" data-tooltip="Preview" aria-label="Preview">
+                    <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m19.28 18.222-1.973-1.974c.436-.64.693-1.414.693-2.246 0-2.206-1.794-4-4-4s-4 1.794-4 4 1.794 4 4 4c.833 0 1.605-.257 2.246-.693l1.974 1.973c.146.147.338.22.53.22s.384-.073.53-.22c.293-.293.293-.767 0-1.06m-7.78-4.22c0-1.379 1.121-2.5 2.5-2.5s2.5 1.121 2.5 2.5-1.121 2.5-2.5 2.5-2.5-1.121-2.5-2.5"/><path fill="currentColor" d="m16.34 5.28-3.62-3.62c-.418-.42-.998-.66-1.591-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18H9c.414 0 .75-.336.75-.75s-.336-.75-.75-.75H5.25c-.413 0-.75-.337-.75-.75V3.25c0-.413.337-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v.5c0 .414.336.75.75.75s.75-.336.75-.75V6.871c0-.592-.24-1.172-.66-1.59m-4.84.47V2.614c.055.032.113.06.158.106l3.622 3.62c.046.046.074.105.106.16H12.25c-.413 0-.75-.337-.75-.75"/></svg>
+                  </button>
+                  <button class="view-mode-btn" type="button" data-view-mode="document" data-tooltip="Document view" aria-label="Document view">
+                    <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m16.34 5.296-3.62-3.622c-.42-.42-1-.66-1.591-.66H5.25C4.01 1.015 3 2.025 3 3.265v12.484c0 1.24 1.01 2.25 2.25 2.25h9.5c1.24 0 2.25-1.01 2.25-2.25V6.887c0-.6-.234-1.166-.66-1.591m-1.06 1.06c.046.047.074.104.106.159H12.25c-.413 0-.75-.337-.75-.75V2.628c.055.033.114.06.16.106zm-.53 10.142h-9.5c-.413 0-.75-.337-.75-.75V3.265c0-.413.337-.75.75-.75H10v3.25c0 1.24 1.01 2.25 2.25 2.25h3.25v7.733c0 .413-.337.75-.75.75"/><path fill="currentColor" d="M13 11.498H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h6c.414 0 .75.336.75.75s-.336.75-.75.75M13 14.498H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h6c.414 0 .75.336.75.75s-.336.75-.75.75"/></svg>
+                  </button>
+                </div>
+                <button class="btn-upload" type="button" data-tooltip="Upload content" aria-label="Upload content">Upload content</button>
               </div>
             </div>
             <div class="toolbar-sep"></div>
 
-            <!-- Breadcrumbs -->
-            <div class="preview-breadcrumbs">
-              <span>Workspace</span>
-              <span class="breadcrumb-sep">&rsaquo;</span>
-              <span>us</span>
-              <span class="breadcrumb-sep">&rsaquo;</span>
-              <span>en</span>
-              <span class="breadcrumb-sep">&rsaquo;</span>
-              <span>customer-first</span>
-            </div>
-
             <!-- Content area: tree + iframe + viewport toggles -->
-            <div class="preview-content">
+            <div class="preview-content" id="preview-content">
 
               <!-- Document Tree -->
               <div class="document-tree">
@@ -907,35 +1468,35 @@
                   <span class="breadcrumb-sep">&rsaquo;</span>
                   <span class="crumb">en</span>
                   <span class="breadcrumb-sep">&rsaquo;</span>
-                  <span class="crumb" style="font-weight:600;">our-company</span>
+                  <span class="crumb crumb-current" style="font-weight:600;">our-company</span>
                 </div>
                 <div class="file-list">
                   <div class="file-item">
-                    <svg viewBox="0 0 16 16"><path d="M1.5 3h5l1.5 1.5H14a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V3z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="Folder" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>
                     global-presence
                   </div>
                   <div class="file-item">
-                    <svg viewBox="0 0 16 16"><path d="M1.5 3h5l1.5 1.5H14a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V3z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="Folder" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>
                     governance
                   </div>
                   <div class="file-item selected">
-                    <svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3V14a.5.5 0 0 1-.5.5h-7A.5.5 0 0 1 4 14V2a.5.5 0 0 1 .5-.5z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M8.5 1.5V5H12" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="File" role="img"><path fill="currentColor" d="M16.341 5.28 12.72 1.66c-.425-.426-.99-.66-1.59-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18h9.5c1.24 0 2.25-1.01 2.25-2.25V6.871c0-.592-.24-1.172-.659-1.59m-1.06 1.06c.045.046.073.105.105.16H12.25c-.414 0-.75-.337-.75-.75V2.614c.055.032.113.06.159.106zM14.75 16.5h-9.5c-.414 0-.75-.337-.75-.75V3.25c0-.413.336-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v7.75c0 .413-.336.75-.75.75"/></svg>
                     ups-accelerates-intra-asia-trade
                   </div>
                   <div class="file-item">
-                    <svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3V14a.5.5 0 0 1-.5.5h-7A.5.5 0 0 1 4 14V2a.5.5 0 0 1 .5-.5z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M8.5 1.5V5H12" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="File" role="img"><path fill="currentColor" d="M16.341 5.28 12.72 1.66c-.425-.426-.99-.66-1.59-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18h9.5c1.24 0 2.25-1.01 2.25-2.25V6.871c0-.592-.24-1.172-.659-1.59m-1.06 1.06c.045.046.073.105.105.16H12.25c-.414 0-.75-.337-.75-.75V2.614c.055.032.113.06.159.106zM14.75 16.5h-9.5c-.414 0-.75-.337-.75-.75V3.25c0-.413.336-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v7.75c0 .413-.336.75-.75.75"/></svg>
                     leadership-list
                   </div>
                   <div class="file-item">
-                    <svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3V14a.5.5 0 0 1-.5.5h-7A.5.5 0 0 1 4 14V2a.5.5 0 0 1 .5-.5z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M8.5 1.5V5H12" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="File" role="img"><path fill="currentColor" d="M16.341 5.28 12.72 1.66c-.425-.426-.99-.66-1.59-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18h9.5c1.24 0 2.25-1.01 2.25-2.25V6.871c0-.592-.24-1.172-.659-1.59m-1.06 1.06c.045.046.073.105.105.16H12.25c-.414 0-.75-.337-.75-.75V2.614c.055.032.113.06.159.106zM14.75 16.5h-9.5c-.414 0-.75-.337-.75-.75V3.25c0-.413.336-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v7.75c0 .413-.336.75-.75.75"/></svg>
                     supply-chain-solutions
                   </div>
                   <div class="file-item">
-                    <svg viewBox="0 0 16 16"><path d="M1.5 3h5l1.5 1.5H14a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V3z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="Folder" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>
                     sustainability
                   </div>
                   <div class="file-item">
-                    <svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3V14a.5.5 0 0 1-.5.5h-7A.5.5 0 0 1 4 14V2a.5.5 0 0 1 .5-.5z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M8.5 1.5V5H12" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="File" role="img"><path fill="currentColor" d="M16.341 5.28 12.72 1.66c-.425-.426-.99-.66-1.59-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18h9.5c1.24 0 2.25-1.01 2.25-2.25V6.871c0-.592-.24-1.172-.659-1.59m-1.06 1.06c.045.046.073.105.105.16H12.25c-.414 0-.75-.337-.75-.75V2.614c.055.032.113.06.159.106zM14.75 16.5h-9.5c-.414 0-.75-.337-.75-.75V3.25c0-.413.336-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v7.75c0 .413-.336.75-.75.75"/></svg>
                     about-us
                   </div>
                 </div>
@@ -949,22 +1510,6 @@
                 </div>
               </div>
 
-              <!-- Viewport Toggles -->
-              <div class="viewport-toggles">
-                <!-- Desktop (active) -->
-                <button class="viewport-btn active" aria-label="Desktop view" title="Desktop">
-                  <svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 14h6M8 12v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-                </button>
-                <!-- Tablet -->
-                <button class="viewport-btn" aria-label="Tablet view" title="Tablet">
-                  <svg viewBox="0 0 16 16"><rect x="3" y="1" width="10" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="13" r="0.75" fill="currentColor"/></svg>
-                </button>
-                <!-- Mobile -->
-                <button class="viewport-btn" aria-label="Mobile view" title="Mobile">
-                  <svg viewBox="0 0 16 16"><rect x="4" y="1" width="8" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="13" r="0.75" fill="currentColor"/></svg>
-                </button>
-              </div>
-
             </div>
           </div>
 
@@ -973,5 +1518,84 @@
 
     </div>
   </div>
+  <script>
+    // Tooltip positioning (fixed to escape overflow/header)
+    document.querySelectorAll('[data-tooltip]').forEach(function(el) {
+      el.addEventListener('mouseenter', function(e) {
+        var r = this.getBoundingClientRect();
+        this.style.setProperty('--tt-x', (r.left + r.width / 2) + 'px');
+        this.style.setProperty('--tt-y', r.top + 'px');
+      });
+    });
+    // Responsive dropdown (viewport selector)
+    var responsiveDropdown = document.getElementById('responsive-dropdown');
+    if (responsiveDropdown) {
+      var trigger = responsiveDropdown.querySelector('.responsive-dropdown-trigger');
+      var overlay = responsiveDropdown.querySelector('.responsive-dropdown-overlay');
+      var iconDesktop = responsiveDropdown.querySelector('.responsive-icon-desktop');
+      var iconTablet = responsiveDropdown.querySelector('.responsive-icon-tablet');
+      var iconPhone = responsiveDropdown.querySelector('.responsive-icon-phone');
+      var viewport = 'desktop';
+      trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        responsiveDropdown.classList.toggle('open');
+      });
+      responsiveDropdown.querySelectorAll('.responsive-dropdown-option').forEach(function(opt) {
+        opt.addEventListener('click', function() {
+          viewport = this.getAttribute('data-viewport');
+          iconDesktop.style.display = viewport === 'desktop' ? '' : 'none';
+          iconTablet.style.display = viewport === 'tablet' ? '' : 'none';
+          iconPhone.style.display = viewport === 'phone' ? '' : 'none';
+          trigger.setAttribute('data-tooltip', viewport.charAt(0).toUpperCase() + viewport.slice(1));
+          responsiveDropdown.classList.remove('open');
+        });
+      });
+      document.addEventListener('click', function() { responsiveDropdown.classList.remove('open'); });
+    }
+    // Document tree toggle (toolbar back button)
+    var documentTreeToggle = document.getElementById('document-tree-toggle');
+    var previewContent = document.getElementById('preview-content');
+    if (documentTreeToggle && previewContent) {
+      documentTreeToggle.addEventListener('click', function() {
+        previewContent.classList.toggle('tree-collapsed');
+      });
+    }
+    // View mode switcher (Preview / Document view)
+    var previewToolbar = document.querySelector('.preview-toolbar');
+    document.querySelectorAll('.view-mode-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        var switcher = this.closest('.view-mode-switcher');
+        switcher.querySelectorAll('.view-mode-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        if (previewToolbar) {
+          if (this.getAttribute('data-view-mode') === 'document') {
+            previewToolbar.classList.add('view-mode-document');
+          } else {
+            previewToolbar.classList.remove('view-mode-document');
+          }
+        }
+      });
+    });
+    document.querySelectorAll('.chat-mode-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.closest('.chat-mode-switcher').querySelectorAll('.chat-mode-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    var taskProgress = document.getElementById('task-progress');
+    var taskProgressToggle = document.getElementById('task-progress-toggle');
+    if (taskProgress && taskProgressToggle) {
+      taskProgressToggle.addEventListener('click', function() {
+        taskProgress.classList.toggle('collapsed');
+        taskProgressToggle.setAttribute('aria-expanded', !taskProgress.classList.contains('collapsed'));
+      });
+      taskProgressToggle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          taskProgressToggle.click();
+        }
+      });
+    }
+  </script>
 </body>
 </html>
