@@ -6,27 +6,37 @@
 
 ## Source Provenance
 
-The `html/` folder contains what was **exported from the actual Experience Modernization UI** using Chrome’s “Save page as” (or equivalent). That export is the UI we want to restyle. It may be incomplete or misleading because Chrome export does not reliably capture iframes, runtime state, or the full rendered output.
+The `html/` folder contains exports from the **actual Experience Modernization UI**:
+
+- **MHTML** (`html/aemcoder.adobe.io.mht`) – Single-file capture with embedded CSS, Spectrum design tokens, and iframe content. **Preferred** for DOM structure, class names, and styling reference.
+- **Chrome “Save page as”** (`Adobe Experience Manager.html`, `Adobe Experience Manager_files/`) – HTML + separate files. May be incomplete; use as fallback.
 
 ---
 
 ## Essential Rules
 
-1. **Screenshots are source of truth.** `screenshots/content-view.png` and `screenshots/page-view.png` define the target appearance.
-2. **HTML export is partial reference only.** The Chrome export in `html/` (e.g. `Adobe Experience Manager.html`, `Adobe Experience Manager_files/`) provides structure, labels, assets—not authoritative layout or styling.
-3. **When HTML and screenshots conflict, prefer screenshots.**
+1. **Screenshots are visual source of truth.** `screenshots/content-view.png` and `screenshots/page-view.png` define the target appearance of the **ExMod console UI**.
+2. **MHTML is the best structural reference.** Use it for DOM hierarchy, Spectrum tokens, embedded CSS, and panel layout. Extract from it; do not confuse it with the preview content inside the iframe.
+3. **When HTML/MHTML and screenshots conflict, prefer screenshots.**
 
 ---
 
 ## Task
 
-Make `html/index.html` look and behave as close as practical to the screenshots. This is **UI prototyping**, not website migration.
+Style **only** the **Experience Modernization Console UI**—the frame and chrome that surround everything. Nothing else.
+
+**Scope:** You need **only** the UI that surrounds the content. You do **not** need:
+- The page loaded inside the preview iframe (e.g. the UPS article)
+- The document view content (document list, article preview, etc.)
+- Any content that appears *inside* panels—only the panels themselves, their toolbars, borders, and layout
+
+**Target:** The frame only—global header, left nav sidebar, Task Progress panel (with its UI, not the chat content), Preview panel (toolbar, document tree chrome, iframe *frame*). The preview iframe should be empty or a minimal placeholder (e.g. grey box). Totally ignore whatever would load inside it.
 
 ---
 
 ## Workflow
 
-1. **Analyse** screenshots and HTML export.
+1. **Analyse** the ExMod UI from the screenshots: identify header, toolbars, panels, iframes, and what is common between the two views. Parse the MHTML to extract DOM structure, Spectrum tokens, and embedded CSS for the **shell** (ignore iframe content).
 2. **Plan** before changing anything (assumptions, missing info, approximations).
 3. **Implement** in the simplest maintainable way.
 4. **Critique** against screenshots and refine.
@@ -35,6 +45,7 @@ Make `html/index.html` look and behave as close as practical to the screenshots.
 
 ## Do Not
 
+- **Include or style any content inside the preview iframe.** Totally ignore it. No UPS article, no document view content, no page load. The iframe is just an empty frame. A previous run mistakenly produced a UPS article page—do not repeat that.
 - Run migration, import, or design-migration workflows.
 - Optimise for EDS, CMS, or content modelling.
 - Overwrite unrelated files.
@@ -43,8 +54,10 @@ Make `html/index.html` look and behave as close as practical to the screenshots.
 
 ## Do
 
-- Use HTML export for: DOM structure, labels, region order, class names.
-- Use screenshots for: spacing, typography, colours, hierarchy, alignment.
+- **Use the MHTML** (`html/aemcoder.adobe.io.mht`) as the primary structural and styling reference: DOM hierarchy, Spectrum class names, `--spectrum-*` design tokens, embedded CSS (ChatPage, ContentPanel, treeBuilders, CodePanel).
+- Use `Adobe Experience Manager.html` as fallback for structure and assets.
+- Use screenshots for: spacing, typography, colours, hierarchy, alignment of the **console UI**.
+- Focus on regions common to both screenshots (content-view and page-view).
 - Keep changes isolated and reversible.
 - Update README provenance table after implementation.
 
@@ -54,5 +67,6 @@ Make `html/index.html` look and behave as close as practical to the screenshots.
 
 | File | Purpose |
 |------|---------|
+| `html/aemcoder.adobe.io.mht` | MHTML capture: DOM, Spectrum tokens, embedded CSS for ExMod shell |
 | [AGENT_PROTOCOL.md](./AGENT_PROTOCOL.md) | Full workflow, constraints, execution strategy |
 | [README.md](./README.md) | Project overview, provenance table |

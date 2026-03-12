@@ -16,28 +16,36 @@
 
 ## Source Handling
 
-**Provenance:** The `html/` folder content was **exported from the actual Experience Modernization UI** via Chrome’s “Save page as” (or equivalent). That export is the UI we want to style. Chrome export may not preserve iframes, runtime state, or full rendered output—hence the low trust level.
+**Provenance:** The `html/` folder contains two exports from the **actual Experience Modernization UI**:
+
+1. **MHTML** (`html/aemcoder.adobe.io.mht`) – Single-file capture. Contains embedded CSS, Spectrum design tokens (`--spectrum-*`), full rendered DOM, and iframe content. **Preferred** for structure and styling.
+2. **Chrome “Save page as”** (`Adobe Experience Manager.html`, `Adobe Experience Manager_files/`) – HTML + separate files. May be incomplete; use as fallback.
 
 | Source | Role | Trust Level |
 |--------|------|-------------|
-| **Screenshots** (`screenshots/content-view.png`, `screenshots/page-view.png`) | Visual source of truth | High – use for spacing, proportions, colours, hierarchy, typography |
-| **HTML export** (`html/Adobe Experience Manager.html`, `html/Adobe Experience Manager_files/`, etc.) | Partial structural reference; Chrome export of the ExMod UI | Low – may be incomplete or misleading |
+| **Screenshots** (`screenshots/content-view.png`, `screenshots/page-view.png`) | Visual source of truth for the **ExMod console UI** | High – spacing, proportions, colours, hierarchy, typography |
+| **MHTML** (`html/aemcoder.adobe.io.mht`) | Primary structural and styling reference: DOM, Spectrum tokens, embedded CSS (ChatPage, ContentPanel, treeBuilders, CodePanel) | High for structure; cross-check with screenshots |
+| **HTML export** (`Adobe Experience Manager.html`, `_files/`) | Fallback structural reference | Low – may be incomplete |
 | **HTML prototype** (`html/index.html`) | Current implementation | Target of improvement |
 
-**Decision rule:** When HTML and screenshots conflict, **prefer screenshots**.
+**Decision rule:** When HTML/MHTML and screenshots conflict, **prefer screenshots**.
+
+**Ignore completely:** The preview iframe content, the document view content, and any page that would load inside panels. You need **only** the frame—the UI that surrounds it all. Extract from MHTML/HTML only the shell elements: header, left nav, Task Progress panel, Preview panel toolbar and document tree. The preview iframe should be empty or a minimal placeholder.
 
 ---
 
 ## Goal
 
-Produce a rapid prototype that makes `html/index.html` look and behave as close as practical to the attached target screenshots.
+Produce a rapid prototype that makes the **Experience Modernization Console UI** (the application shell) look and behave as close as practical to the attached target screenshots.
 
-**Focus on:**
-- Visible layout, hierarchy, spacing, sizing, typography
-- Borders, backgrounds, panel structure
-- Interaction affordances (e.g. buttons, links)
+**Target = the frame only.** You need **only** the UI that surrounds everything—not the content inside. Totally ignore:
+- The preview iframe content (no UPS article, no page load)
+- The document view content (document list, article preview, etc.)
+- Any content that appears *inside* panels
 
-**Prioritise:** Practical fidelity over theoretical reconstruction.
+A previous agent mistakenly built a UPS article page. Do **not** repeat that. Build only the frame: header, nav, panels, toolbars, borders, layout. The preview iframe should be empty or a minimal placeholder (e.g. grey box).
+
+**Focus on:** layout, hierarchy, spacing, typography, borders, backgrounds, panel structure, interaction affordances of the **console UI**.
 
 ---
 
@@ -45,8 +53,10 @@ Produce a rapid prototype that makes `html/index.html` look and behave as close 
 
 ### 1. Analyse
 
-- Analyse the screenshots and HTML export.
-- Identify which parts of the UI can be reused from the export and which must be reconstructed from the screenshots.
+- Analyse the screenshots to understand the **ExMod UI structure**: header, toolbars, panels, iframes. Distinguish the **shell** from the **preview content** (UPS article) inside the right panel.
+- Identify **common regions** between `content-view.png` and `page-view.png` (these are the stable shell elements).
+- Parse the **MHTML** (`html/aemcoder.adobe.io.mht`): extract DOM structure, Spectrum tokens (`--spectrum-*`), and embedded CSS for the shell. Ignore the iframe’s inner content.
+- Compare with `Adobe Experience Manager.html` as fallback: which parts can be reused, which must be reconstructed from screenshots.
 
 ### 2. Plan
 
@@ -95,23 +105,23 @@ Produce a rapid prototype that makes `html/index.html` look and behave as close 
 ### What to do instead
 
 - Reframe the task as: *“Build the closest practical UI prototype from mixed structural and visual evidence.”*
-- **Use the HTML export for:** rough DOM structure, labels, region ordering, reusable assets, potential class names.
+- **Use the MHTML for:** DOM structure, Spectrum class names, `--spectrum-*` design tokens, embedded CSS (ChatPage, ContentPanel, treeBuilders, CodePanel). Extract only shell elements; ignore iframe content.
+- **Use the HTML export for:** fallback structure, labels, region ordering, reusable assets.
 - **Use screenshots for:** spacing, proportions, alignment, panel boundaries, colour choices, states, visual hierarchy.
 
 ---
 
 ## Execution Strategy
 
-1. **Identify stable top-level regions** from the screenshots:
-   - Header (logo, nav, tools)
-   - Breadcrumbs
-   - Article header (eyebrow, title, byline, subtitle, hero image)
-   - Article body (bullets, paragraphs, subheadings)
-   - Social share
+1. **Identify stable top-level regions** from the screenshots (focus on regions common to both screenshots):
+   - **Global header:** hamburger, Adobe AEM logo, Request support, bell, user icon, settings
+   - **Left nav sidebar:** dark vertical strip with icons (home, content, folder, code, gear, etc.)
+   - **Left panel (Task Progress):** task list, status updates, chat/instruction area, input field
+   - **Right panel (Preview):** toolbar (breadcrumbs, document title, Delete, Upload content), document tree (left sub-sidebar), iframe preview area
 
-2. **Reconstruct each region separately** using screenshots for visual fidelity.
+2. **Treat the preview pane as an empty frame.** Totally ignore its content. Do **not** load any page in it. Do **not** include document view content. Use an empty iframe or a minimal placeholder (e.g. grey box). A previous agent produced `index.html` as a full UPS article; that was wrong.
 
-3. **For content outside the main article** (e.g. AEM Task Progress panel, browser chrome, iframe preview): ignore or create a placeholder only if the task explicitly requires it. The primary target is the **article page content** visible in the screenshots.
+3. **Reconstruct each region separately** using screenshots for visual fidelity of the **console UI**.
 
 4. **Use critique thinking manually:**
    - Compare implemented output to screenshots
@@ -132,7 +142,7 @@ Produce a rapid prototype that makes `html/index.html` look and behave as close 
 
 ## Preferred Output
 
-- **Self-contained prototype** in `html/index.html`.
+- **Self-contained prototype** in `html/index.html` that replicates the **ExMod console UI** (shell, panels, toolbars, chat). The preview area should be an empty iframe or minimal placeholder—no page content, no document view content.
 - **README update** (`README.md`) explaining:
   - What was derived from HTML
   - What was inferred from screenshots

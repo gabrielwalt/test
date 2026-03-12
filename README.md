@@ -10,16 +10,21 @@ See **[CLAUDE.md](./CLAUDE.md)** for essential instructions. Full protocol: [AGE
 
 **Screenshots** (`screenshots/`):
 
-- **content-view.png** – Article content in a focused view
-- **page-view.png** – Full page including header, breadcrumbs, and article
+- **content-view.png** – ExMod UI with content-focused view
+- **page-view.png** – ExMod UI with full page layout
 
-Both depict a UPS press release article: *"UPS Accelerates Intra-Asia Trade With Capacity and Speed Enhancements to Its Air Network"*.
+Both show the **ExMod console** (header, nav, Task Progress, Preview panel). The preview pane displays a UPS article inside an iframe—that is **not** the styling target.
 
-**HTML export** (`html/`): The content in this folder was **exported from the actual Experience Modernization UI** using Chrome’s “Save page as.” That export is the UI we want to restyle to match the screenshots. It may be incomplete because Chrome export does not reliably capture iframes or runtime state.
+**Exports** (`html/`): Two captures from the **actual Experience Modernization UI**:
+
+- **MHTML** (`aemcoder.adobe.io.mht`) – Single-file capture with embedded CSS, Spectrum design tokens, and iframe content. **Preferred** for DOM structure and styling.
+- **Chrome “Save page as”** (`Adobe Experience Manager.html`, `Adobe Experience Manager_files/`) – HTML + separate files. Fallback.
+
+**Target:** **Only** the **ExMod console UI**—the frame that surrounds everything. Totally ignore the preview iframe content (no UPS article, no page load) and document view content. Build only the surrounding UI: header, nav, panels, toolbars, borders. The preview iframe should be empty or a minimal placeholder.
 
 ## Output
 
-- **index.html** – Standalone prototype that replicates the layout and styling from the screenshots
+- **index.html** – Prototype of the ExMod console UI (shell, panels, toolbars, chat). The preview pane may embed the UPS article as an iframe.
 
 ## Usage
 
@@ -31,7 +36,8 @@ After implementing or refining the prototype, update this section:
 
 | Aspect | Source | Notes |
 |--------|--------|-------|
-| **Derived from HTML** | | DOM structure, labels, region order, class names |
+| **Derived from MHTML** | | DOM structure, Spectrum tokens, embedded CSS, class names |
+| **Derived from HTML** | | Fallback structure, labels, region order |
 | **Inferred from screenshots** | | Spacing, typography, colours, hierarchy |
 | **Approximate** | | Regions that are placeholder or best-guess |
 | **Replace with real app code** | | What should be swapped for production implementation |
