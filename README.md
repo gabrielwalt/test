@@ -24,20 +24,18 @@ Both show the **ExMod console** (header, nav, Task Progress, Preview panel). The
 
 ## Output
 
-- **index.html** – Prototype of the ExMod console UI (shell, panels, toolbars, chat). The preview pane may embed the UPS article as an iframe.
+- **`html/index.html`** – Self-contained prototype of the ExMod console UI shell. The preview pane is an empty placeholder (no iframe content loaded).
 
 ## Usage
 
-Open `html/index.html` in a browser to view the scaffolded page. The page is self-contained with embedded styles for easy experimentation.
+Open `html/index.html` in a browser to view the prototype. The page is self-contained with all styles embedded for easy experimentation. Best viewed at 1440x900 or wider.
 
-## Provenance (for agent updates)
-
-After implementing or refining the prototype, update this section:
+## Provenance
 
 | Aspect | Source | Notes |
 |--------|--------|-------|
-| **Derived from MHTML** | | DOM structure, Spectrum tokens, embedded CSS, class names |
-| **Derived from HTML** | | Fallback structure, labels, region order |
-| **Inferred from screenshots** | | Spacing, typography, colours, hierarchy |
-| **Approximate** | | Regions that are placeholder or best-guess |
-| **Replace with real app code** | | What should be swapped for production implementation |
+| **Derived from MHTML** | Color tokens (`--spectrum-gray-*` scale), layout approach (CSS Grid `minmax(400px, 33%) 1fr`), border radii (`0.625rem`, `1rem`), border colours (`#dadada`, `#e1e1e1`), font stacks (adobe-clean family), ProdNav collapsed width, chat panel structure, document tree structure, progress bar, viewport toggles | Extracted from `aemcoder.adobe.io.mht` embedded CSS and DOM |
+| **Derived from HTML** | Adobe logo SVG path (`adobe-logo.svg`), region labels ("Task Progress", "Request support") | Taken from `Adobe Experience Manager_files/` |
+| **Inferred from screenshots** | Overall proportions (~33/67% panel split), header height (~56px), nav width (~48px), spacing (20px grid padding), "Open in editor" button style (blue pill), task list indicators (blue/yellow/grey circles), chat message card styling, toolbar button order | Measured from `content-view.png` and `page-view.png` |
+| **Approximate** | SVG icon paths (simplified Spectrum icon approximations), chat message placeholder text, task list item descriptions, document tree file names, progress bar percentage | Representative placeholders to show panel structure |
+| **Replace with real app code** | All SVG icons (use Spectrum icon set), font loading (adobe-clean webfont), React component tree, interactive behaviour (accordion, collapse, viewport switching, chat input), real data binding, dark mode support | Static prototype — no interactivity or real data |
