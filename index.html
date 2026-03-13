@@ -34,9 +34,16 @@
       --spectrum-blue-900: #3b63fb;
       --spectrum-blue-1000: #274dea;
 
+      /* Sweet violet (plan mode accent - AI-style) */
+      --spectrum-violet-800: #8b5cf6;
+      --spectrum-violet-900: #7c3aed;
+      --spectrum-plan-accent-default: var(--spectrum-violet-800);
+      --spectrum-plan-accent-hover: var(--spectrum-violet-900);
+
       /* Notice (orange - for in-progress) */
       --spectrum-orange-600: #fc7d00;
       --spectrum-green-600: #2d9d78;
+      --spectrum-red-600: #e34850;
 
       /* Semantic aliases (Spectrum naming) */
       --spectrum-background-layer-1-color: var(--spectrum-gray-50);
@@ -416,6 +423,88 @@
     .chat-resize-handle.dragging .chat-resize-handle-grip {
       background: var(--spectrum-blue-200);
     }
+    .document-tree-resize-handle {
+      width: 1px;
+      min-width: 1px;
+      flex-shrink: 0;
+      align-self: stretch;
+      margin: 0 auto;
+      display: block;
+      position: relative;
+      z-index: 2;
+      overflow: visible;
+      background: var(--spectrum-gray-300);
+    }
+    .document-tree-resize-handle-grip {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 5px;
+      margin-left: -2.5px;
+      cursor: col-resize;
+      user-select: none;
+      background: transparent;
+      transition: background-color 0.13s ease-out;
+    }
+    .document-tree-resize-handle:hover .document-tree-resize-handle-grip,
+    .document-tree-resize-handle.dragging .document-tree-resize-handle-grip {
+      background: var(--spectrum-gray-200);
+    }
+    .document-tree-resize-handle.dragging .document-tree-resize-handle-grip {
+      background: var(--spectrum-blue-200);
+    }
+    /* Disable width transition during resize for instant feedback (chat panel has none) */
+    .preview-content.tree-resizing .document-tree,
+    .preview-code.tree-resizing .code-tree {
+      transition: none;
+    }
+    .preview-content.tree-collapsed .document-tree-resize-handle,
+    .preview-code.code-tree-collapsed .document-tree-resize-handle {
+      display: none;
+    }
+
+    /* Custom tooltip for truncated file names (matches [data-tooltip] button style) */
+    .exmod-file-tooltip {
+      position: fixed;
+      z-index: 10000;
+      max-width: 320px;
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-100);
+      font-size: var(--spectrum-font-size-75);
+      font-weight: var(--spectrum-medium-font-weight);
+      font-family: var(--spectrum-sans-serif-font-family);
+      color: var(--spectrum-gray-50);
+      background: var(--spectrum-gray-800);
+      border-radius: var(--spectrum-corner-radius-75);
+      pointer-events: none;
+      white-space: normal;
+      word-break: break-word;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.1s ease-out, visibility 0.1s ease-out;
+    }
+    .exmod-file-tooltip::before {
+      content: '';
+      position: absolute;
+      left: var(--tt-arrow-x, 50%);
+      width: 10px;
+      height: 6px;
+      background: var(--spectrum-gray-800);
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+      transform: translate(-50%, 0);
+    }
+    .exmod-file-tooltip.above::before {
+      top: auto;
+      bottom: -6px;
+      clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    }
+    .exmod-file-tooltip:not(.above)::before {
+      top: -6px;
+    }
+    .exmod-file-tooltip.visible {
+      opacity: 1;
+      visibility: visible;
+    }
 
     /* === TASK PROGRESS PANEL (Left) === */
     .exmod-chat {
@@ -552,6 +641,13 @@
     }
     .task-progress-header:hover {
       background: var(--spectrum-button-hover-overlay);
+    }
+    .task-progress-header.task-progress-header-stopped {
+      cursor: default;
+      pointer-events: none;
+    }
+    .task-progress-header.task-progress-header-stopped:hover {
+      background: transparent;
     }
     .task-progress-header:focus-visible {
       outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
@@ -732,6 +828,28 @@
       display: flex;
       flex-direction: column;
       gap: 0;
+    }
+    .chat-empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: var(--spectrum-gray-500);
+      font-size: var(--spectrum-font-size-300);
+      font-family: var(--spectrum-sans-serif-font-family);
+      padding: var(--spectrum-spacing-400);
+      text-align: center;
+    }
+    .chat-empty-state::before {
+      content: '';
+      flex: 1;
+      min-height: 0;
+    }
+    .chat-empty-state::after {
+      content: '';
+      flex: 2;
+      min-height: 0;
     }
     .chat-msg {
       padding: var(--spectrum-spacing-200) 0;
@@ -947,6 +1065,16 @@
     .chat-send-btn:focus-visible {
       outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
       outline-offset: var(--spectrum-focus-indicator-gap);
+    }
+    .exmod-chat[data-mode="plan"] .chat-send-btn {
+      background: var(--spectrum-plan-accent-default);
+    }
+    .exmod-chat[data-mode="plan"] .chat-send-btn:hover {
+      background: var(--spectrum-plan-accent-hover);
+    }
+    .exmod-chat[data-mode="plan"] .chat-input-wrap:focus-within {
+      border-color: var(--spectrum-plan-accent-default);
+      box-shadow: 0 0 0 1px var(--spectrum-plan-accent-default);
     }
 
     /* === PREVIEW PANEL (Right) === */
@@ -1168,8 +1296,23 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+    .preview-slot {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .preview-slot > .preview-content,
+    .preview-slot > .preview-code {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+    .preview-panels-pool {
+      display: none !important;
+    }
     .preview-code {
-      display: none;
       flex: 1;
       min-height: 0;
       flex-direction: column;
@@ -1180,12 +1323,6 @@
       font-size: var(--spectrum-font-size-100);
       color: var(--spectrum-gray-800);
     }
-    .exmod-preview.content-mode-code .preview-content {
-      display: none !important;
-    }
-    .exmod-preview.content-mode-code .preview-code {
-      display: flex;
-    }
 
     /* Code view: tree + editor layout */
     .preview-code {
@@ -1195,7 +1332,7 @@
       overflow: hidden;
     }
     .code-tree {
-      width: var(--spectrum-document-tree-width);
+      width: var(--document-tree-width, var(--spectrum-document-tree-width));
       min-width: var(--spectrum-document-tree-min-width);
       flex-shrink: 0;
       display: flex;
@@ -1262,7 +1399,7 @@
       font-size: var(--spectrum-font-size-100);
     }
     .code-tree-inner {
-      min-width: var(--spectrum-document-tree-width);
+      min-width: var(--document-tree-width, var(--spectrum-document-tree-width));
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -1355,7 +1492,7 @@
 
     /* Document Tree Sidebar (Spectrum FileTree style) */
     .document-tree {
-      width: var(--spectrum-document-tree-width);
+      width: var(--document-tree-width, var(--spectrum-document-tree-width));
       min-width: var(--spectrum-document-tree-min-width);
       flex-shrink: 0;
       display: flex;
@@ -1370,7 +1507,7 @@
     }
     /* Inner wrapper keeps content fixed during collapse animation (clipped, not reflowed) */
     .document-tree-inner {
-      min-width: var(--spectrum-document-tree-width);
+      min-width: var(--document-tree-width, var(--spectrum-document-tree-width));
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -1484,18 +1621,7 @@
       color: var(--spectrum-neutral-content-color-default);
       transition: background-color 0.13s ease-out;
     }
-    .file-item-title {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--spectrum-spacing-100);
-      padding: var(--spectrum-spacing-75) 0;
-      margin: calc(-1 * var(--spectrum-spacing-75)) 0;
-      border-radius: var(--spectrum-corner-radius-100);
-      cursor: pointer;
-    }
-    .file-item-title:hover {
-      background: var(--spectrum-button-hover-overlay);
-    }
+    .file-item:hover { background: var(--spectrum-button-hover-overlay); }
     .file-item.selected {
       background: var(--spectrum-gray-800);
       color: var(--spectrum-gray-50);
@@ -1512,9 +1638,11 @@
       fill: currentColor;
     }
     .file-item .file-name {
+      flex: 1;
       min-width: 0;
       overflow: hidden;
       white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .file-item .file-item-text {
       min-width: 0;
@@ -1918,11 +2046,30 @@
       display: flex;
       align-items: center;
       gap: var(--spectrum-spacing-100);
-      padding: var(--spectrum-spacing-75) 0;
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-200);
+      font-size: var(--spectrum-font-size-100);
+      color: var(--spectrum-gray-700);
+    }
+    .actions-dropdown-label {
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-100);
+      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-200);
+      font-size: var(--spectrum-font-size-100);
+      color: var(--spectrum-gray-700);
+      white-space: nowrap;
+    }
+    .actions-dropdown-option.disabled {
+      color: var(--spectrum-gray-400);
+      cursor: default;
+      pointer-events: none;
     }
     .actions-dropdown-dot {
+      display: inline-block;
       width: 6px;
       height: 6px;
+      min-width: 6px;
+      min-height: 6px;
       border-radius: 50%;
       flex-shrink: 0;
     }
@@ -1931,6 +2078,12 @@
     }
     .actions-dropdown-dot-blue {
       background: var(--spectrum-blue-800);
+    }
+    .actions-dropdown-dot-red {
+      background: var(--spectrum-red-600);
+    }
+    .actions-dropdown-value {
+      font-weight: var(--spectrum-bold-font-weight);
     }
     .actions-dropdown-divider {
       height: 1px;
@@ -1993,7 +2146,7 @@
         <div class="exmod-grid">
 
           <!-- ====== TASK PROGRESS PANEL (Left) ====== -->
-          <div class="exmod-chat">
+          <div class="exmod-chat" data-mode="execute">
             <div class="chat-container">
 
               <!-- Task Progress (sticky, collapsible) -->
@@ -2015,7 +2168,7 @@
                     <button type="button" class="chat-toolbar-btn" data-tooltip="Download chat" aria-label="Download chat">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M13.53 9.427c-.292-.292-.766-.294-1.06 0l-1.717 1.714V2.75c0-.414-.336-.75-.75-.75s-.75.336-.75.75v8.4L7.53 9.426c-.293-.293-.767-.293-1.06 0s-.293.767 0 1.06l2.998 2.998c.146.147.338.22.53.22.191 0 .384-.073.53-.22l3.002-2.998c.293-.292.293-.767 0-1.06"></path><path fill="currentColor" d="M15.75 18H4.25C3.01 18 2 16.99 2 15.75v-2.021c0-.415.336-.75.75-.75s.75.335.75.75v2.021c0 .413.337.75.75.75h11.5c.413 0 .75-.337.75-.75v-2.021c0-.415.336-.75.75-.75s.75.335.75.75v2.021c0 1.24-1.01 2.25-2.25 2.25"></path></svg>
                     </button>
-                    <button type="button" class="chat-toolbar-btn chat-toolbar-btn--disabled" data-tooltip="Clear chat" aria-label="Clear chat" disabled>
+                    <button type="button" class="chat-toolbar-btn chat-toolbar-btn--disabled" id="clear-chat-btn" data-tooltip="Clear chat" aria-label="Clear chat" disabled>
                       <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M8.249 15.021c-.4 0-.733-.317-.748-.72l-.25-6.5c-.017-.414.307-.763.72-.779H8c.4 0 .733.317.748.72l.25 6.5c.017.414-.307.763-.72.778zM11.751 15.021h-.03c-.413-.016-.737-.365-.72-.779l.25-6.5c.015-.403.348-.72.748-.72h.03c.413.016.737.365.72.779l-.25 6.5c-.015.403-.348.72-.748.72"/><path fill="currentColor" d="M17 4h-3.5v-.75C13.5 2.01 12.49 1 11.25 1h-2.5C7.51 1 6.5 2.01 6.5 3.25V4H3c-.414 0-.75.336-.75.75s.336.75.75.75h.52l.422 10.342C3.99 17.052 4.98 18 6.19 18h7.62c1.211 0 2.2-.948 2.248-2.158L16.48 5.5H17c.414 0 .75-.336.75-.75S17.414 4 17 4m-9-.75c0-.413.337-.75.75-.75h2.5c.413 0 .75.337.75.75V4H8zm6.56 12.531c-.017.404-.346.719-.75.719H6.19c-.404 0-.733-.315-.75-.719L5.02 5.5h9.96z"/></svg>
                     </button>
                   </div>
@@ -2142,7 +2295,7 @@
                     </span>
                     <span class="chat-thinking-text">thinking… (1min)</span>
                   </div>
-                  <button type="button" class="chat-toolbar-btn" data-tooltip="Interrupt task" aria-label="Interrupt task">
+                  <button type="button" class="chat-toolbar-btn" id="interrupt-task-btn" data-tooltip="Interrupt task" aria-label="Interrupt task">
                     <svg viewBox="0 0 18 18" focusable="false" aria-hidden="true"><path fill="currentColor" d="M9,1a8,8,0,1,0,8,8A8,8,0,0,0,9,1Zm4,11.5a.5.5,0,0,1-.5.5h-7a.5.5,0,0,1-.5-.5v-7A.5.5,0,0,1,5.5,5h7a.5.5,0,0,1,.5.5Z"/></svg>
                   </button>
                 </div>
@@ -2273,48 +2426,44 @@
                     <svg class="btn-actions-github-icon" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" focusable="false" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
                     Actions
                   </button>
-                  <div class="actions-dropdown-overlay">
-                    <div class="actions-dropdown-header">
-                      <div class="actions-dropdown-header-row">
-                        <span class="actions-dropdown-dot actions-dropdown-dot-green" aria-hidden="true"></span>
-                        <span>GitHub:<br>gabrielwalt</span>
-                      </div>
-                      <div class="actions-dropdown-divider"></div>
-                      <div class="actions-dropdown-header-row">
-                        <span class="actions-dropdown-dot actions-dropdown-dot-blue" aria-hidden="true"></span>
-                        <span>Workspace:<br>gabrielwalt/up (main)</span>
-                      </div>
-                      <div class="actions-dropdown-divider"></div>
-                    </div>
-                    <button type="button" class="actions-dropdown-option" data-action="sync">
+                  <div class="actions-dropdown-overlay" id="actions-dropdown-code-overlay">
+                    <button type="button" class="actions-dropdown-option" data-action="sync" id="github-action-sync">
                       <svg viewBox="0 0 18 18" focusable="false"><path fill="currentColor" d="M14.643,4.7355a4.3935,4.3935,0,0,0-8.5095-1.521,3.861,3.861,0,0,0-3.8445,3.7A2.612,2.612,0,0,0,.5165,9.6865,2.673,2.673,0,0,0,3.205,12H5.75A.25.25,0,0,0,6,11.75v-.5A.25.25,0,0,0,5.75,11H3.2A1.668,1.668,0,0,1,1.5045,9.4795,1.607,1.607,0,0,1,3.02214,7.78786q.0434-.00235.08686-.00236h.1795v-.714a2.85951,2.85951,0,0,1,3.6-2.7595,3.3935,3.3935,0,1,1,6.634,1.35,2.6785,2.6785,0,1,1,.3,5.34H12.25a.25.25,0,0,0-.25.25v.5a.25.25,0,0,0,.25.25H13.7A3.7585,3.7585,0,0,0,17.4735,8.76,3.684,3.684,0,0,0,14.643,4.7355Z"/><path fill="currentColor" d="M11.25,14.5H10v-7A.5.5,0,0,0,9.5,7h-1a.5.5,0,0,0-.5.5v7H6.75a.25.25,0,0,0-.25.25.24453.24453,0,0,0,.0585.1585L8.818,17.42a.25.25,0,0,0,.35339.01061L9.182,17.42l2.2595-2.5115A.24453.24453,0,0,0,11.5,14.75.25.25,0,0,0,11.25,14.5Z"/></svg>
                       Sync code
                     </button>
-                    <button type="button" class="actions-dropdown-option" data-action="push">
+                    <button type="button" class="actions-dropdown-option" data-action="push" id="github-action-push">
                       <svg viewBox="0 0 18 18" focusable="false"><path fill="currentColor" d="M14.643,4.7355a4.3935,4.3935,0,0,0-8.5095-1.521,3.861,3.861,0,0,0-3.8445,3.7A2.612,2.612,0,0,0,.5165,9.6865,2.673,2.673,0,0,0,3.205,12H5.75A.25.25,0,0,0,6,11.75v-.5A.25.25,0,0,0,5.75,11H3.2A1.668,1.668,0,0,1,1.5045,9.4795,1.607,1.607,0,0,1,3.02214,7.78786q.0434-.00235.08686-.00236h.1795v-.714a2.85951,2.85951,0,0,1,3.6-2.7595,3.3935,3.3935,0,1,1,6.634,1.35,2.6785,2.6785,0,1,1,.3,5.34H12.25a.25.25,0,0,0-.25.25v.5a.25.25,0,0,0,.25.25H13.7A3.7585,3.7585,0,0,0,17.4735,8.76,3.684,3.684,0,0,0,14.643,4.7355Z"/><path fill="currentColor" d="M6.75,9H8v7.5a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5V9h1.25a.25.25,0,0,0,.25-.25.24453.24453,0,0,0-.0585-.1585L9.182,6.08a.25.25,0,0,0-.3534-.01061L8.818,6.08,6.5585,8.59A.24453.24453,0,0,0,6.5,8.75.25.25,0,0,0,6.75,9Z"/></svg>
                       Push code
                     </button>
-                    <button type="button" class="actions-dropdown-option" data-action="switch-branch">
-                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m18.53 13.47-3-3c-.293-.293-.767-.293-1.06 0s-.293.767 0 1.06l1.72 1.72H4c-.414 0-.75.336-.75.75s.336.75.75.75h12.19l-1.72 1.72c-.293.293-.293.767 0 1.06.146.147.338.22.53.22s.384-.073.53-.22l3-3c.293-.293.293-.767 0-1.06M16 5.25H3.81l1.72-1.72c.293-.293.293-.767 0-1.06s-.767-.293-1.06 0l-3 3c-.293.293-.293.767 0 1.06l3 3c.146.147.338.22.53.22s.384-.073.53-.22c.293-.293.293-.767 0-1.06L3.81 6.75H16c.414 0 .75-.336.75-.75s-.336-.75-.75-.75"/></svg>
-                      Switch branch
+                    <div class="actions-dropdown-divider"></div>
+                    <div class="actions-dropdown-label" id="github-user-label">User: <span class="actions-dropdown-value">gabrielwalt</span></div>
+                    <button type="button" class="actions-dropdown-option" data-action="reconnect" id="github-action-reconnect" style="display:none">
+                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M5.313 18.748c-1.04 0-2.08-.396-2.873-1.188-1.584-1.584-1.584-4.163 0-5.747l3.906-3.906c1.585-1.584 4.162-1.583 5.747 0q.327.329.566.71c.22.35.115.814-.235 1.034-.353.222-.814.115-1.034-.235q-.152-.241-.36-.45c-.999-.998-2.625-.997-3.624.002l-3.905 3.905c-.999 1-.999 2.627 0 3.626 1.001 1.001 2.627.997 3.626 0l1.952-1.952c.293-.293.768-.293 1.06 0s.294.767 0 1.06L8.189 17.56c-.792.792-1.834 1.187-2.875 1.188m8.341-6.655 3.906-3.905c1.584-1.585 1.584-4.164 0-5.748s-4.164-1.584-5.747 0L9.86 4.393c-.293.293-.293.767 0 1.06s.768.293 1.06 0l1.953-1.952c1-.998 2.625-1 3.626 0 .999.999.999 2.626 0 3.626l-3.905 3.905c-1 1-2.625 1-3.624.001q-.208-.207-.36-.449c-.22-.35-.681-.457-1.034-.235-.35.22-.456.683-.235 1.034q.24.381.566.71c.793.792 1.833 1.188 2.874 1.188 1.04 0 2.081-.396 2.873-1.188"/></svg>
+                      Reconnect
                     </button>
+                    <button type="button" class="actions-dropdown-option" data-action="logout" id="github-action-logout">
+                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m11.06 10 5.207-5.206c.293-.293.293-.768 0-1.06s-.767-.294-1.06 0L10 8.938 4.793 3.733c-.293-.293-.767-.293-1.06 0s-.293.768 0 1.06L8.939 10l-5.206 5.206c-.293.293-.293.768 0 1.06.146.147.338.22.53.22s.384-.073.53-.22L10 11.062l5.207 5.206c.146.146.338.22.53.22s.384-.074.53-.22c.293-.293.293-.768 0-1.06z"/></svg>
+                      Logout
+                    </button>
+                    <div class="actions-dropdown-divider"></div>
+                    <div class="actions-dropdown-label" id="github-repo-label">Repository: <span class="actions-dropdown-value">gabrielwalt/up</span></div>
                     <button type="button" class="actions-dropdown-option" data-action="switch-repo">
                       <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M15.75 11H4.995l5.718-6.634c.782-.908.73-2.24-.118-2.97l-.323-.277c-.42-.364-.97-.523-1.54-.451-.543.069-1.045.343-1.414.771L1.44 8.259c-.782.908-.729 2.24.118 2.97l.323.278c.183.158.39.276.613.355-.304.383-.493.862-.493 1.388v3C2 17.767 3.233 19 4.75 19h10.5c1.517 0 2.75-1.233 2.75-2.75v-3c0-1.24-1.01-2.25-2.25-2.25M2.575 9.24l5.88-6.822c.126-.147.292-.24.466-.262q.03-.005.073-.005c.087 0 .202.02.3.104l.322.277c.217.187.2.578-.038.854l-5.88 6.821c-.127.147-.293.24-.467.263-.08.011-.243.012-.372-.099l-.322-.278c-.217-.187-.2-.578.038-.854M16.5 16.25c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-3c0-.414.336-.75.75-.75h11.5c.414 0 .75.336.75.75z"/><path fill="currentColor" d="M11.5 15.5h-3c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h3c.414 0 .75.336.75.75s-.336.75-.75.75M18.28 2.72c-.293-.293-.767-.293-1.06 0L13.5 6.44V5.25c0-.414-.336-.75-.75-.75s-.75.336-.75.75v3c0 .414.336.75.75.75h3c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-1.19l3.72-3.72c.293-.293.293-.767 0-1.06"/></svg>
                       Switch repository
                     </button>
-                    <button type="button" class="actions-dropdown-option" data-action="reconnect">
-                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M5.313 18.748c-1.04 0-2.08-.396-2.873-1.188-1.584-1.584-1.584-4.163 0-5.747l3.906-3.906c1.585-1.584 4.162-1.583 5.747 0q.327.329.566.71c.22.35.115.814-.235 1.034-.353.222-.814.115-1.034-.235q-.152-.241-.36-.45c-.999-.998-2.625-.997-3.624.002l-3.905 3.905c-.999 1-.999 2.627 0 3.626 1.001 1.001 2.627.997 3.626 0l1.952-1.952c.293-.293.768-.293 1.06 0s.294.767 0 1.06L8.189 17.56c-.792.792-1.834 1.187-2.875 1.188m8.341-6.655 3.906-3.905c1.584-1.585 1.584-4.164 0-5.748s-4.164-1.584-5.747 0L9.86 4.393c-.293.293-.293.767 0 1.06s.768.293 1.06 0l1.953-1.952c1-.998 2.625-1 3.626 0 .999.999.999 2.626 0 3.626l-3.905 3.905c-1 1-2.625 1-3.624.001q-.208-.207-.36-.449c-.22-.35-.681-.457-1.034-.235-.35.22-.456.683-.235 1.034q.24.381.566.71c.793.792 1.833 1.188 2.874 1.188 1.04 0 2.081-.396 2.873-1.188"/></svg>
-                      Reconnect
-                    </button>
-                    <button type="button" class="actions-dropdown-option" data-action="logout">
-                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m11.06 10 5.207-5.206c.293-.293.293-.768 0-1.06s-.767-.294-1.06 0L10 8.938 4.793 3.733c-.293-.293-.767-.293-1.06 0s-.293.768 0 1.06L8.939 10l-5.206 5.206c-.293.293-.293.768 0 1.06.146.147.338.22.53.22s.384-.073.53-.22L10 11.062l5.207 5.206c.146.146.338.22.53.22s.384-.074.53-.22c.293-.293.293-.768 0-1.06z"/></svg>
-                      Logout
+                    <div class="actions-dropdown-divider"></div>
+                    <div class="actions-dropdown-label" id="github-branch-label">Branch: <span class="actions-dropdown-value">main</span></div>
+                    <button type="button" class="actions-dropdown-option" data-action="switch-branch">
+                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m18.53 13.47-3-3c-.293-.293-.767-.293-1.06 0s-.293.767 0 1.06l1.72 1.72H4c-.414 0-.75.336-.75.75s.336.75.75.75h12.19l-1.72 1.72c-.293.293-.293.767 0 1.06.146.147.338.22.53.22s.384-.073.53-.22l3-3c.293-.293.293-.767 0-1.06M16 5.25H3.81l1.72-1.72c.293-.293.293-.767 0-1.06s-.767-.293-1.06 0l-3 3c-.293.293-.293.767 0 1.06l3 3c.146.147.338.22.53.22s.384-.073.53-.22c.293-.293.293-.767 0-1.06L3.81 6.75H16c.414 0 .75-.336.75-.75s-.336-.75-.75-.75"/></svg>
+                      Switch branch
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- Preview slot: holds the active panel (content or code); swapped on mode change -->
+            <div class="preview-slot" id="preview-slot">
             <!-- Content area: tree + iframe + viewport toggles -->
             <div class="preview-content" id="preview-content">
 
@@ -2340,10 +2489,8 @@
                 </div>
                 <div class="file-list">
                   <div class="file-item">
-                    <span class="file-item-title">
-                      <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="Folder" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>
-                      <span class="file-name" data-full-title="global-presence">global-presence</span>
-                    </span>
+                    <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="Folder" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>
+                    <span class="file-name" data-full-title="global-presence">global-presence</span>
                   </div>
                   <div class="file-item">
                     <svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-label="Folder" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>
@@ -2477,6 +2624,10 @@
                 </div>
               </div>
 
+              <div class="document-tree-resize-handle" id="document-tree-resize-handle" role="separator" aria-orientation="vertical" aria-label="Resize document tree">
+                <div class="document-tree-resize-handle-grip" id="document-tree-resize-handle-grip"></div>
+              </div>
+
               <!-- Iframe (Empty Placeholder) -->
               <div class="iframe-container">
                 <div class="iframe-placeholder">
@@ -2486,7 +2637,9 @@
               </div>
 
             </div>
-
+            </div>
+            <!-- Pool for inactive panel (hidden); panels are swapped in/out on mode change -->
+            <div class="preview-panels-pool" id="preview-panels-pool" aria-hidden="true">
             <!-- Code view: workspace tree + editor -->
             <div class="preview-code" id="preview-code">
               <aside class="code-tree" aria-label="Workspace files tree" role="tree">
@@ -2494,6 +2647,9 @@
                   <div class="code-tree-list" id="code-tree-list"></div>
                 </div>
               </aside>
+              <div class="document-tree-resize-handle" id="document-tree-resize-handle-code" role="separator" aria-orientation="vertical" aria-label="Resize document tree">
+                <div class="document-tree-resize-handle-grip" id="document-tree-resize-handle-grip-code"></div>
+              </div>
               <div class="code-changes" aria-label="Changes" role="region">
                 <div class="code-changes-placeholder">No changes to display</div>
               </div>
@@ -2514,6 +2670,7 @@
   color: var(--spectrum-gray-900);
 }</code></pre>
               </div>
+            </div>
             </div>
           </div>
 
@@ -2572,6 +2729,61 @@
         document.removeEventListener('mouseup', onMouseUp);
       }
       grip.addEventListener('mousedown', onMouseDown);
+    })();
+
+    // Document tree resize (drag handle between tree and content)
+    (function() {
+      var preview = document.getElementById('exmod-preview');
+      var handleContent = document.getElementById('document-tree-resize-handle');
+      var handleCode = document.getElementById('document-tree-resize-handle-code');
+      var gripContent = document.getElementById('document-tree-resize-handle-grip');
+      var gripCode = document.getElementById('document-tree-resize-handle-grip-code');
+      if (!preview || !handleContent || !handleCode || !gripContent || !gripCode) return;
+      var minWidth = 250;
+      var defaultWidth = 260;
+      function getMaxWidth() {
+        return Math.max(minWidth, (preview.offsetWidth || 0) - 200);
+      }
+      function initWidth() {
+        var current = preview.style.getPropertyValue('--document-tree-width');
+        if (!current) return defaultWidth;
+        var n = parseInt(current, 10);
+        return isNaN(n) ? defaultWidth : n;
+      }
+      function setupResize(handle, grip) {
+        var startX, startWidth;
+        var container;
+        function onMouseDown(e) {
+          if (e.button !== 0) return;
+          e.preventDefault();
+          startX = e.clientX;
+          var tree = handle.previousElementSibling;
+          startWidth = tree ? tree.offsetWidth : initWidth();
+          handle.classList.add('dragging');
+          container = handle.closest('.preview-content, .preview-code');
+          if (container) container.classList.add('tree-resizing');
+          document.body.style.cursor = 'col-resize';
+          document.body.style.userSelect = 'none';
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        }
+        function onMouseMove(e) {
+          var delta = e.clientX - startX;
+          var newWidth = Math.round(Math.max(minWidth, Math.min(getMaxWidth(), startWidth + delta)));
+          preview.style.setProperty('--document-tree-width', newWidth + 'px');
+        }
+        function onMouseUp() {
+          handle.classList.remove('dragging');
+          if (container) container.classList.remove('tree-resizing');
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+        grip.addEventListener('mousedown', onMouseDown);
+      }
+      setupResize(handleContent, gripContent);
+      setupResize(handleCode, gripCode);
     })();
 
     // Viewport dropdown (Desktop / Tablet / Phone)
@@ -2656,6 +2868,46 @@
         });
       }
     });
+
+    // GitHub Actions menu: connection state and interactivity
+    (function() {
+      var connected = true;
+      var syncBtn = document.getElementById('github-action-sync');
+      var pushBtn = document.getElementById('github-action-push');
+      var reconnectBtn = document.getElementById('github-action-reconnect');
+      var logoutBtn = document.getElementById('github-action-logout');
+      var userLabel = document.getElementById('github-user-label');
+      var actionsDropdown = document.getElementById('actions-dropdown-code');
+      var actionsTrigger = actionsDropdown ? actionsDropdown.querySelector('.btn-actions') : null;
+      function updateUI() {
+        if (syncBtn) syncBtn.classList.toggle('disabled', !connected);
+        if (pushBtn) pushBtn.classList.toggle('disabled', !connected);
+        if (reconnectBtn) reconnectBtn.style.display = connected ? 'none' : 'flex';
+        if (logoutBtn) logoutBtn.style.display = connected ? 'flex' : 'none';
+        if (userLabel) {
+          if (connected) {
+            userLabel.innerHTML = 'User: <span class="actions-dropdown-value">gabrielwalt</span>';
+          } else {
+            userLabel.innerHTML = 'User: <span class="actions-dropdown-dot actions-dropdown-dot-red" aria-hidden="true"></span><span class="actions-dropdown-value">not connected</span>';
+          }
+        }
+      }
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          connected = false;
+          updateUI();
+        });
+      }
+      if (reconnectBtn) {
+        reconnectBtn.addEventListener('click', function() {
+          connected = true;
+          updateUI();
+          if (actionsDropdown) actionsDropdown.classList.remove('open');
+          if (actionsTrigger) actionsTrigger.setAttribute('aria-expanded', 'false');
+        });
+      }
+      updateUI();
+    })();
     document.addEventListener('click', function() {
       document.querySelectorAll('.actions-dropdown.open').forEach(function(d) {
         d.classList.remove('open');
@@ -2663,137 +2915,113 @@
         if (t) t.setAttribute('aria-expanded', 'false');
       });
     });
-    // Middle-truncate long file names (macOS style: start...end, ellipsis at word boundaries)
-    function truncateMiddle(el) {
-      var full = el.getAttribute('data-full-title') || el.textContent;
-      if (!full) return;
-      var item = el.closest('.file-item');
-      if (!item) return;
-      var svg = item.querySelector('svg');
-      var gap = 8;
-      var padH = 16;
-      var avail = el.offsetWidth;
-      if (!avail) avail = item.offsetWidth - (svg ? svg.offsetWidth : 0) - gap - padH;
-      if (avail <= 0) return;
-      var cs = getComputedStyle(el);
-      var measure = document.createElement('span');
-      measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;' +
-        'font:' + (cs.font || (cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily));
-      document.body.appendChild(measure);
-      measure.textContent = full;
-      if (measure.offsetWidth <= avail) {
-        document.body.removeChild(measure);
-        el.textContent = full;
-        el.setAttribute('title', '');
-        return;
-      }
-      var ellipsis = '...';
-      // Word boundaries: split at - _ . space so ellipsis replaces whole words (macOS style)
-      // startBoundaries = end of each segment (where prefix can end)
-      // endBoundaries = start of each segment (where suffix can start)
-      var startBoundaries = [0];
-      var endBoundaries = [0];
-      for (var i = 0; i < full.length; i++) {
-        var c = full.charAt(i);
-        if (c === '-' || c === '_' || c === '.' || c === ' ') {
-          startBoundaries.push(i);
-          endBoundaries.push(i + 1);
-        }
-      }
-      startBoundaries.push(full.length);
-      endBoundaries.push(full.length);
-      var bestStart = 0, bestEnd = 0;
-      var bestScore = -1;
-      var midTarget = full.length / 2;
-      var minEndLen = 4;
-      var maxEndLen = Math.min(15, Math.floor(full.length / 2));
-      // Try each valid suffix (from endBoundaries)
-      for (var b = 0; b < endBoundaries.length; b++) {
-        var endStart = endBoundaries[b];
-        var endLen = full.length - endStart;
-        if (endLen < minEndLen || endLen > maxEndLen) continue;
-        // Try all prefix boundaries that fit, pick best score (centered ellipsis)
-        for (var s = 0; s < startBoundaries.length; s++) {
-          var startLen = startBoundaries[s];
-          if (startLen >= full.length - endLen) continue;
-          var txt = full.slice(0, startLen) + ellipsis + full.slice(-endLen);
-          measure.textContent = txt;
-          if (measure.offsetWidth <= avail) {
-            var totalChars = startLen + endLen;
-            var balance = Math.abs(startLen - midTarget);
-            var score = 10000 - balance * 100 + totalChars;
-            if (score > bestScore) {
-              bestScore = score;
-              bestStart = startLen;
-              bestEnd = endLen;
-            }
+    // File list: sort by folder/file then name; set title from data-full-title for tooltip when CSS truncates
+    (function() {
+      var fileList = document.querySelector('.file-list');
+      if (fileList) {
+        var items = Array.from(fileList.querySelectorAll('.file-item'));
+        items.sort(function(a, b) {
+          var aFolder = a.querySelector('svg[aria-label="Folder"]') ? 1 : 0;
+          var bFolder = b.querySelector('svg[aria-label="Folder"]') ? 1 : 0;
+          if (aFolder !== bFolder) return bFolder - aFolder;
+          var aName = (a.querySelector('.file-name').getAttribute('data-full-title') || '').toLowerCase();
+          var bName = (b.querySelector('.file-name').getAttribute('data-full-title') || '').toLowerCase();
+          return aName.localeCompare(bName);
+        });
+        items.forEach(function(item) { fileList.appendChild(item); });
+        items.forEach(function(item) {
+          var nameEl = item.querySelector('.file-name');
+          if (nameEl) {
+            var full = nameEl.getAttribute('data-full-title') || nameEl.textContent;
+            if (full) item.setAttribute('data-tooltip', full);
           }
-        }
+        });
       }
-      document.body.removeChild(measure);
-      el.setAttribute('title', full);
-      if (bestStart > 0 || bestEnd > 0) {
-        el.textContent = full.slice(0, bestStart) + ellipsis + full.slice(-bestEnd);
-      } else {
-        // Fallback: no word-boundary split fits (e.g. no delimiters), use character-based
-        measure = document.createElement('span');
-        measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;' +
-          'font:' + (cs.font || (cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily));
-        document.body.appendChild(measure);
-        bestScore = -1;
-        for (var endLen = 4; endLen <= maxEndLen; endLen++) {
-          var low = 3, high = full.length - endLen;
-          while (low <= high) {
-            var startLen = Math.floor((low + high) / 2);
-            var txt = full.slice(0, startLen) + ellipsis + full.slice(-endLen);
-            measure.textContent = txt;
-            if (measure.offsetWidth <= avail) {
-              var totalChars = startLen + endLen;
-              var balance = Math.abs(startLen - midTarget);
-              var score = 10000 - balance * 100 + totalChars;
-              if (score > bestScore) {
-                bestScore = score;
-                bestStart = startLen;
-                bestEnd = endLen;
-              }
-              low = startLen + 1;
-            } else {
-              high = startLen - 1;
-            }
+    })();
+
+    // Custom tooltip for file/code tree items (shows faster than native title)
+    (function() {
+      var tooltip = document.createElement('div');
+      tooltip.className = 'exmod-file-tooltip';
+      tooltip.setAttribute('role', 'tooltip');
+      document.body.appendChild(tooltip);
+      var showTimer = null;
+      var hideTimer = null;
+      function show(text, el) {
+        if (!text) return;
+        tooltip.textContent = text;
+        tooltip.classList.add('visible');
+        var rect = el.getBoundingClientRect();
+        var x = rect.left;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = '0';
+        var tr = tooltip.getBoundingClientRect();
+        var y = rect.top - tr.height - 4;
+        if (y < 8) {
+          y = rect.bottom + 4;
+          tooltip.classList.remove('above');
+        } else {
+          tooltip.classList.add('above');
+        }
+        if (y + tr.height > window.innerHeight - 8) y = window.innerHeight - tr.height - 8;
+        if (y < 8) y = 8;
+        if (tr.right > window.innerWidth - 8) x = window.innerWidth - tr.width - 8;
+        if (tr.left < 8) x = 8;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = y + 'px';
+        var arrowX = rect.left + rect.width / 2 - x;
+        tooltip.style.setProperty('--tt-arrow-x', Math.max(12, Math.min(tr.width - 12, arrowX)) + 'px');
+      }
+      function hide() {
+        tooltip.classList.remove('visible');
+      }
+      document.querySelectorAll('.file-item').forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+          var text = item.getAttribute('data-tooltip') || item.getAttribute('title');
+          if (!text) return;
+          if (showTimer) clearTimeout(showTimer);
+          if (hideTimer) clearTimeout(hideTimer);
+          hideTimer = null;
+          showTimer = setTimeout(function() {
+            showTimer = null;
+            show(text, item);
+          }, 300);
+        });
+        item.addEventListener('mouseleave', function(e) {
+          if (!e.relatedTarget || !item.contains(e.relatedTarget)) {
+            if (showTimer) clearTimeout(showTimer);
+            showTimer = null;
+            hideTimer = setTimeout(function() { hideTimer = null; hide(); }, 150);
           }
-        }
-        document.body.removeChild(measure);
-        el.textContent = (bestStart > 0 || bestEnd > 0)
-          ? full.slice(0, bestStart) + ellipsis + full.slice(-bestEnd)
-          : full.slice(0, 8) + ellipsis + full.slice(-4);
-      }
-    }
-    function initFileNames() {
-      var exmod = document.getElementById('exmod-preview');
-      if (exmod && exmod.classList.contains('content-mode-code')) return;
-      var pageTitle = document.querySelector('.page-title');
-      var selectedFile = document.querySelector('.file-item.selected .file-name');
-      if (pageTitle && selectedFile) {
-        var title = pageTitle.textContent.trim();
-        selectedFile.setAttribute('data-full-title', title);
-        selectedFile.textContent = title;
-      }
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          document.querySelectorAll('.file-item .file-name').forEach(truncateMiddle);
         });
       });
-    }
-    initFileNames();
+      // Code tree items are built later; use delegation on the list
+      var codeTreeList = document.getElementById('code-tree-list');
+      if (codeTreeList) {
+        codeTreeList.addEventListener('mouseenter', function(e) {
+          var item = e.target.closest('.code-tree-item');
+          if (!item) return;
+          var nameEl = item.querySelector('.code-tree-name');
+          var text = nameEl ? nameEl.getAttribute('title') || nameEl.textContent : null;
+          if (!text) return;
+          if (showTimer) clearTimeout(showTimer);
+          if (hideTimer) clearTimeout(hideTimer);
+          hideTimer = null;
+          showTimer = setTimeout(function() {
+            showTimer = null;
+            show(text, item);
+          }, 300);
+        }, true);
+        codeTreeList.addEventListener('mouseleave', function(e) {
+          if (!e.relatedTarget || !codeTreeList.contains(e.relatedTarget)) {
+            if (showTimer) clearTimeout(showTimer);
+            showTimer = null;
+            hideTimer = setTimeout(function() { hideTimer = null; hide(); }, 150);
+          }
+        }, true);
+      }
+    })();
     var fileList = document.querySelector('.file-list');
-    var documentTree = document.querySelector('.document-tree');
-    if (fileList && typeof ResizeObserver !== 'undefined') {
-      new ResizeObserver(initFileNames).observe(fileList);
-    }
-    if (documentTree && typeof ResizeObserver !== 'undefined') {
-      new ResizeObserver(initFileNames).observe(documentTree);
-    }
-    window.addEventListener('resize', initFileNames);
     // File list: selection and page title sync
     if (fileList) {
       fileList.addEventListener('click', function(e) {
@@ -2807,7 +3035,6 @@
           var name = nameEl.getAttribute('data-full-title') || nameEl.textContent;
           pageTitle.textContent = name;
         }
-        initFileNames();
       });
     }
 
@@ -2826,7 +3053,6 @@
         } else if (previewContent) {
           var collapsed = previewContent.classList.toggle('tree-collapsed');
           documentTreeToggle.setAttribute('aria-expanded', !collapsed);
-          requestAnimationFrame(function() { requestAnimationFrame(initFileNames); });
         }
       });
       documentTreeToggle.addEventListener('keydown', function(e) {
@@ -2860,16 +3086,38 @@
         }
       });
     });
-    // Content / Code mode switcher
+    // Content / Code mode switcher – swap panels so only the active one is in the slot
     var exmodPreview = document.getElementById('exmod-preview');
+    var previewSlot = document.getElementById('preview-slot');
+    var previewPool = document.getElementById('preview-panels-pool');
     var pageTitle = document.querySelector('.page-title');
+    function swapPreviewPanel(toCode) {
+      if (!previewSlot || !previewPool) return;
+      var contentPanel = document.getElementById('preview-content');
+      var codePanel = document.getElementById('preview-code');
+      if (!contentPanel || !codePanel) return;
+      var currentInSlot = previewSlot.firstElementChild;
+      if (toCode && currentInSlot === contentPanel) {
+        previewSlot.removeChild(contentPanel);
+        previewPool.appendChild(contentPanel);
+        previewPool.removeChild(codePanel);
+        previewSlot.appendChild(codePanel);
+      } else if (!toCode && currentInSlot === codePanel) {
+        previewSlot.removeChild(codePanel);
+        previewPool.appendChild(codePanel);
+        previewPool.removeChild(contentPanel);
+        previewSlot.appendChild(contentPanel);
+      }
+    }
     document.querySelectorAll('.content-mode-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         var switcher = this.closest('.content-mode-switcher');
         switcher.querySelectorAll('.content-mode-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         if (exmodPreview) {
-          if (this.getAttribute('data-mode') === 'code') {
+          var toCode = this.getAttribute('data-mode') === 'code';
+          swapPreviewPanel(toCode);
+          if (toCode) {
             exmodPreview.classList.add('content-mode-code');
             var previewCode = document.getElementById('preview-code');
             if (previewCode) previewCode.classList.remove('code-tree-collapsed');
@@ -2886,13 +3134,6 @@
             if (pageTitle) {
               var contentFile = document.querySelector('.file-item.selected .file-name');
               if (contentFile) pageTitle.textContent = (contentFile.getAttribute('data-full-title') || contentFile.textContent).trim();
-            }
-            if (typeof initFileNames === 'function') {
-              requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                  setTimeout(initFileNames, 0);
-                });
-              });
             }
           }
         }
@@ -2977,7 +3218,7 @@
             var collapsedClass = isExpanded ? '' : ' collapsed';
             html += '<div class="code-tree-folder' + collapsedClass + '" data-key="' + subPath + '">';
             html += '<div class="code-tree-item folder' + collapsedClass + '" data-level="' + level + '" role="treeitem" aria-expanded="' + isExpanded + '" aria-label="' + k + '">';
-            html += '<span class="code-tree-chevron" aria-hidden="true">' + CHEVRON_SVG + '</span>' + FOLDER_SVG + '<span class="code-tree-name">' + k + '</span></div>';
+            html += '<span class="code-tree-chevron" aria-hidden="true">' + CHEVRON_SVG + '</span>' + FOLDER_SVG + '<span class="code-tree-name" title="' + k + '">' + k + '</span></div>';
             html += '<div class="code-tree-children">' + renderNode('', sub, subPath, level + 1, isExpanded) + '</div></div>';
           });
         }
@@ -2986,7 +3227,7 @@
             var filePath = path ? path + '/' + f : f;
             var selected = filePath === 'blocks/article-header/article-header.css' ? ' selected' : '';
             html += '<div class="code-tree-item file' + selected + '" data-level="' + level + '" role="treeitem" aria-label="' + f + '" data-path="' + filePath + '">';
-            html += '<span class="code-tree-chevron" aria-hidden="true">' + CHEVRON_SVG + '</span>' + FILE_SVG + '<span class="code-tree-name">' + f + '</span></div>';
+            html += '<span class="code-tree-chevron" aria-hidden="true">' + CHEVRON_SVG + '</span>' + FILE_SVG + '<span class="code-tree-name" title="' + f + '">' + f + '</span></div>';
           });
         }
         return html;
@@ -3039,14 +3280,59 @@
     })();
     document.querySelectorAll('.chat-mode-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        this.closest('.chat-mode-switcher').querySelectorAll('.chat-mode-btn').forEach(b => b.classList.remove('active'));
+        const switcher = this.closest('.chat-mode-switcher');
+        switcher.querySelectorAll('.chat-mode-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
+        const chat = document.querySelector('.exmod-chat');
+        if (chat) chat.setAttribute('data-mode', this.getAttribute('aria-label')?.toLowerCase().includes('plan') ? 'plan' : 'execute');
       });
     });
     var taskProgress = document.getElementById('task-progress');
     var taskProgressToggle = document.getElementById('task-progress-toggle');
+    var taskProgressContent = document.getElementById('task-progress-content');
+    var progressBarFill = document.querySelector('.progress-bar-wrap .progress-fill');
+    var chatMessages = document.querySelector('.chat-messages');
+    var clearChatBtn = document.getElementById('clear-chat-btn');
+    var taskStopped = false;
+    function resetTaskProgress() {
+      if (taskProgressToggle) {
+        taskProgressToggle.innerHTML = '<h3>Experience Modernization Agent</h3>';
+        taskProgressToggle.classList.add('task-progress-header-stopped');
+        taskProgressToggle.removeAttribute('role');
+        taskProgressToggle.removeAttribute('tabindex');
+        taskProgressToggle.removeAttribute('aria-expanded');
+        taskProgressToggle.removeAttribute('aria-controls');
+        taskProgressToggle.removeAttribute('aria-label');
+      }
+      if (taskProgressContent) taskProgressContent.innerHTML = '';
+      if (progressBarFill) progressBarFill.style.width = '0%';
+      if (taskProgress) taskProgress.classList.add('collapsed');
+    }
+    function interruptTask() {
+      if (taskStopped) return;
+      taskStopped = true;
+      document.querySelectorAll('.chat-thinking-separator, .chat-thinking').forEach(function(el) { el.remove(); });
+      if (clearChatBtn) {
+        clearChatBtn.disabled = false;
+        clearChatBtn.classList.remove('chat-toolbar-btn--disabled');
+      }
+      resetTaskProgress();
+    }
+    function clearChatAndTask() {
+      if (chatMessages) chatMessages.innerHTML = '<div class="chat-empty-state" aria-live="polite">Hi, I can help you migrate your website to Edge Delivery Services.</div>';
+      resetTaskProgress();
+      if (clearChatBtn) {
+        clearChatBtn.disabled = false;
+        clearChatBtn.classList.remove('chat-toolbar-btn--disabled');
+      }
+    }
+    document.getElementById('interrupt-task-btn')?.addEventListener('click', interruptTask);
+    if (clearChatBtn) clearChatBtn.addEventListener('click', function() {
+      if (!this.disabled) clearChatAndTask();
+    });
     if (taskProgress && taskProgressToggle) {
       function toggleTaskProgress() {
+        if (taskStopped) return;
         taskProgress.classList.toggle('collapsed');
         taskProgressToggle.setAttribute('aria-expanded', !taskProgress.classList.contains('collapsed'));
       }
@@ -3072,7 +3358,6 @@
         }
       });
     }
-    var chatMessages = document.querySelector('.chat-messages');
     if (chatMessages) {
       requestAnimationFrame(function() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
