@@ -2957,13 +2957,6 @@
           return aName.localeCompare(bName);
         });
         items.forEach(function(item) { fileList.appendChild(item); });
-        items.forEach(function(item) {
-          var nameEl = item.querySelector('.file-name');
-          if (nameEl) {
-            var full = nameEl.getAttribute('data-full-title') || nameEl.textContent;
-            if (full) item.setAttribute('data-tooltip', full);
-          }
-        });
       }
     })();
 
@@ -3003,26 +2996,6 @@
       function hide() {
         tooltip.classList.remove('visible');
       }
-      document.querySelectorAll('.file-item').forEach(function(item) {
-        item.addEventListener('mouseenter', function() {
-          var text = item.getAttribute('data-tooltip') || item.getAttribute('title');
-          if (!text) return;
-          if (showTimer) clearTimeout(showTimer);
-          if (hideTimer) clearTimeout(hideTimer);
-          hideTimer = null;
-          showTimer = setTimeout(function() {
-            showTimer = null;
-            show(text, item);
-          }, 300);
-        });
-        item.addEventListener('mouseleave', function(e) {
-          if (!e.relatedTarget || !item.contains(e.relatedTarget)) {
-            if (showTimer) clearTimeout(showTimer);
-            showTimer = null;
-            hideTimer = setTimeout(function() { hideTimer = null; hide(); }, 150);
-          }
-        });
-      });
       // Code tree items are built later; use delegation on the list
       var codeTreeList = document.getElementById('code-tree-list');
       if (codeTreeList) {
