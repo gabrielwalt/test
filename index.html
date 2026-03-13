@@ -75,9 +75,9 @@
       --spectrum-icon-size-100: 20px;
       --spectrum-icon-size-200: 20px;
       --spectrum-icon-size-300: 24px;
-      --spectrum-corner-radius-75: 4px;
+      --spectrum-corner-radius-75: 5px;
       --spectrum-corner-radius-100: 8px;
-      --spectrum-corner-radius-500: 8px;
+      --spectrum-corner-radius-500: 10px;
       --spectrum-border-width-100: 1px;
       --spectrum-border-width-200: 2px;
       --spectrum-focus-indicator-color: var(--spectrum-blue-800);
@@ -462,6 +462,14 @@
     .preview-content.tree-collapsed .document-tree-resize-handle,
     .preview-code.code-tree-collapsed .document-tree-resize-handle {
       display: none;
+    }
+    .preview-content.tree-collapsed .iframe-container {
+      margin-left: -2px;
+    }
+    .preview-code.code-tree-collapsed .code-changes,
+    .preview-code.code-tree-collapsed .code-changes-empty-state,
+    .preview-code.code-tree-collapsed .code-tree-editor {
+      margin-left: -2px;
     }
 
     /* Custom tooltip for truncated file names (matches [data-tooltip] button style) */
@@ -1017,23 +1025,31 @@
     .chat-mode-btn {
       width: var(--spectrum-component-height-100);
       height: var(--spectrum-component-height-100);
+      padding: 0;
       border: none;
-      border-radius: calc(var(--spectrum-corner-radius-100) - 2px);
-      background: transparent;
+      border-radius: 0;
+      background: var(--spectrum-gray-25);
       color: var(--spectrum-gray-800);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
+      border-right: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      transition: background-color 0.13s ease-out, color 0.13s ease-out;
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-medium-font-weight);
+      font-family: var(--spectrum-sans-serif-font-family);
+    }
+    .chat-mode-btn:last-child {
+      border-right: none;
     }
     .chat-mode-btn:hover {
-      background: var(--spectrum-gray-200);
+      background: var(--spectrum-gray-100);
     }
     .chat-mode-btn.active {
-      background: var(--spectrum-gray-25);
-      border: 2px solid var(--spectrum-gray-800);
+      background: var(--spectrum-gray-800);
+      color: var(--spectrum-gray-25);
     }
     .chat-attach-btn svg,
     .chat-mode-btn svg,
@@ -1043,9 +1059,11 @@
     }
     .chat-mode-switcher {
       display: flex;
-      gap: 2px;
+      gap: 0;
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
       border-radius: var(--spectrum-corner-radius-100);
-      background: var(--spectrum-gray-100);
+      overflow: hidden;
+      background: var(--spectrum-gray-25);
     }
     .chat-send-btn {
       width: var(--spectrum-component-height-100);
@@ -1141,9 +1159,10 @@
     .btn-add-to-chat {
       display: none;
       align-items: center;
-      gap: var(--spectrum-spacing-100);
+      justify-content: center;
+      width: var(--spectrum-component-height-100);
       height: var(--spectrum-component-height-100);
-      padding: 0 var(--spectrum-spacing-100);
+      padding: 0;
       background: transparent;
       color: var(--spectrum-gray-800);
       border: none;
@@ -1155,7 +1174,7 @@
       transition: background-color 0.13s ease-out;
     }
     .btn-add-to-chat:hover {
-      background: var(--spectrum-gray-100);
+      background: var(--spectrum-button-hover-overlay);
     }
     .btn-add-to-chat:focus-visible {
       outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
@@ -1165,6 +1184,9 @@
       width: var(--spectrum-icon-size-100);
       height: var(--spectrum-icon-size-100);
       flex-shrink: 0;
+    }
+    .content-toolbar:not(.view-mode-document) .btn-add-to-chat {
+      display: inline-flex;
     }
     .exmod-preview.content-mode-code .content-toolbar.code-file-selected .btn-add-to-chat {
       display: inline-flex;
@@ -1223,7 +1245,7 @@
       transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
     }
     .btn-ghost:hover {
-      background: var(--spectrum-gray-100);
+      background: var(--spectrum-button-hover-overlay);
     }
     .btn-ghost:focus-visible {
       outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
@@ -1243,58 +1265,141 @@
       display: inline-flex;
       align-items: center;
       color: var(--spectrum-gray-700);
-      font-size: 2.2em;
-      line-height: 1;
       margin: 0 var(--spectrum-focus-indicator-gap);
-      transform: translateY(-0.15em);
       flex-shrink: 0;
       cursor: default !important;
     }
+    .breadcrumb-sep svg {
+      display: block;
+      vertical-align: middle;
+    }
     .breadcrumb-sep:hover { text-decoration: none !important; color: var(--spectrum-gray-700) !important; }
 
-    /* Content / Code mode switcher (like view-mode-switcher) */
-    .content-mode-switcher {
-      display: flex;
-      gap: 2px;
-      border-radius: var(--spectrum-corner-radius-100);
-      background: var(--spectrum-gray-100);
+    /* View mode dropdown – Content/Code + sub-options */
+    .view-mode-dropdown {
+      position: relative;
+      flex-shrink: 0;
     }
-    .content-mode-btn {
-      width: var(--spectrum-component-height-100);
-      height: var(--spectrum-component-height-100);
-      border: none;
-      border-radius: calc(var(--spectrum-corner-radius-100) - 2px);
-      background: transparent;
-      color: var(--spectrum-gray-800);
-      cursor: pointer;
+    .view-mode-dropdown-trigger {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: var(--spectrum-spacing-100);
+      height: var(--spectrum-component-height-100);
+      min-width: var(--spectrum-component-height-100);
+      padding: 0 var(--spectrum-spacing-100);
+      background: var(--spectrum-gray-25);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-400);
+      border-radius: var(--spectrum-corner-radius-100);
+      color: var(--spectrum-gray-800);
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-medium-font-weight);
+      font-family: var(--spectrum-sans-serif-font-family);
+      line-height: 1.3;
+      cursor: pointer;
       transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
     }
-    .content-mode-btn:hover {
-      background: var(--spectrum-gray-200);
+    .view-mode-dropdown-trigger:hover {
+      background: var(--spectrum-gray-100);
+      border-color: var(--spectrum-gray-500);
     }
-    .content-mode-btn:focus-visible {
+    .view-mode-dropdown-trigger[aria-expanded="true"] {
+      border-color: var(--spectrum-gray-500);
+    }
+    .view-mode-dropdown-trigger:focus-visible {
       outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
       outline-offset: var(--spectrum-focus-indicator-gap);
     }
-    .content-mode-btn.active {
-      background: var(--spectrum-gray-25);
-      border: 2px solid var(--spectrum-gray-800);
+    .view-mode-dropdown-trigger-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
     }
-    .content-mode-btn svg {
-      display: block;
+    .view-mode-dropdown-trigger-icon svg {
       width: var(--spectrum-static-size-200);
       height: var(--spectrum-static-size-200);
       fill: currentColor;
     }
-    .content-mode-btn svg.spectrum-icon-outline {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .view-mode-dropdown-label {
+      white-space: nowrap;
+    }
+    .view-mode-dropdown-chevron {
+      flex-shrink: 0;
+      width: var(--spectrum-icon-size-100);
+      height: var(--spectrum-icon-size-100);
+    }
+    .view-mode-dropdown-overlay {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: var(--spectrum-spacing-75);
+      min-width: 180px;
+      background: var(--spectrum-gray-25);
+      border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+      border-radius: var(--spectrum-corner-radius-100);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      z-index: 100;
+      overflow: hidden;
+      padding: var(--spectrum-spacing-75) 0;
+    }
+    .view-mode-dropdown.open .view-mode-dropdown-overlay {
+      display: block;
+    }
+    .view-mode-dropdown-section {
+      padding: 0;
+    }
+    .view-mode-dropdown-section:not(:first-child) {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .view-mode-dropdown-section:not(:first-child)::before {
+      content: '';
+      display: block;
+      height: 2px;
+      background: #d5d5d5;
+      margin: 6px 12px;
+    }
+    .view-mode-dropdown-section-header {
+      padding: 6px 36px 3px 12px;
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-bold-font-weight);
+      color: var(--spectrum-gray-900);
+    }
+    .view-mode-dropdown-option {
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-200);
+      width: 100%;
+      padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
+      border: none;
+      background: none;
+      color: var(--spectrum-gray-800);
+      font-size: var(--spectrum-font-size-100);
+      font-family: var(--spectrum-sans-serif-font-family);
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.13s ease-out;
+    }
+    .view-mode-dropdown-option-icon {
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
+      flex-shrink: 0;
+      fill: currentColor;
+    }
+    .view-mode-dropdown-option:hover {
+      background: var(--spectrum-gray-100);
+    }
+    .view-mode-dropdown-option-shortcut {
+      margin-left: auto;
+      font-size: var(--spectrum-font-size-100);
+      color: var(--spectrum-gray-600);
+    }
+    .view-mode-dropdown-option.active {
+      background: var(--spectrum-blue-200);
     }
     .preview-slot {
       flex: 1;
@@ -1347,6 +1452,9 @@
       min-width: 0;
       overflow: hidden;
     }
+    .preview-code.code-tree-collapsed .code-tree.code-tree-fully-hidden {
+      display: none;
+    }
     .code-changes {
       display: none;
       width: var(--spectrum-document-tree-width);
@@ -1355,9 +1463,6 @@
       flex-direction: column;
       overflow: hidden;
       border-right: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
-    }
-    .preview-code.code-view-changes .code-tree {
-      display: none;
     }
     .preview-code.code-view-changes .code-changes {
       display: none;
@@ -1573,10 +1678,11 @@
       display: none;
       position: absolute;
       top: 100%;
-      left: 0;
+      /* Shift left so option padding matches other dropdowns while folder icons align with trigger */
+      left: calc(-1 * (var(--spectrum-spacing-200) - 2px));
       margin-top: var(--spectrum-spacing-75);
       min-width: 140px;
-      background: var(--spectrum-background-layer-1-color);
+      background: var(--spectrum-gray-25);
       border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
       border-radius: var(--spectrum-corner-radius-100);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -1587,7 +1693,8 @@
       display: block;
     }
     .breadcrumb-path-option {
-      display: block;
+      display: flex;
+      align-items: center;
       width: 100%;
       padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
       border: none;
@@ -1598,6 +1705,13 @@
       text-align: left;
       font-family: var(--spectrum-sans-serif-font-family);
       transition: background-color 0.13s ease-out;
+      gap: var(--spectrum-spacing-100);
+    }
+    .breadcrumb-path-option svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: inherit;
     }
     .breadcrumb-path-option:hover {
       background: var(--spectrum-gray-75);
@@ -1683,16 +1797,20 @@
       position: relative;
     }
     .viewport-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: var(--spectrum-component-height-100);
       height: var(--spectrum-component-height-100);
+      padding: 0;
       border: none;
       background: transparent;
       border-radius: var(--spectrum-corner-radius-100);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: var(--spectrum-neutral-subdued-content-color-default);
+      font-size: var(--spectrum-font-size-100);
+      font-weight: var(--spectrum-medium-font-weight);
+      font-family: var(--spectrum-sans-serif-font-family);
       transition: background-color 0.13s ease-out, color 0.13s ease-out;
     }
     .viewport-dropdown-trigger:hover {
@@ -1707,6 +1825,7 @@
       width: var(--spectrum-static-size-200);
       height: var(--spectrum-static-size-200);
       fill: currentColor;
+      flex-shrink: 0;
     }
     .viewport-dropdown-overlay {
       display: none;
@@ -1782,12 +1901,12 @@
     [data-tooltip] {
       position: relative;
     }
-    /* Tooltip arrow (triangle pointing to icon) */
+    /* Tooltip arrow (triangle pointing to icon) – gap so triangle doesn't touch button */
     [data-tooltip]::before {
       content: '';
       position: fixed;
       left: var(--tt-x, 0);
-      top: calc(var(--tt-y, 0) - 6px);
+      top: calc(var(--tt-y, 0) - 10px);
       width: 10px;
       height: 6px;
       background: var(--spectrum-gray-800);
@@ -1818,7 +1937,7 @@
       position: fixed;
       left: var(--tt-x, 0);
       top: var(--tt-y, 0);
-      transform: translate(-50%, calc(-100% - 6px));
+      transform: translate(-50%, calc(-100% - 10px));
       padding: var(--spectrum-spacing-75) var(--spectrum-spacing-100);
       background: var(--spectrum-gray-800);
       color: var(--spectrum-gray-50);
@@ -1911,59 +2030,6 @@
       flex-shrink: 0;
     }
 
-    /* View mode switcher (Preview / Document view) */
-    .view-mode-switcher {
-      display: flex;
-      gap: 2px;
-      border-radius: var(--spectrum-corner-radius-100);
-      background: var(--spectrum-gray-100);
-    }
-    .view-mode-btn {
-      width: var(--spectrum-component-height-100);
-      height: var(--spectrum-component-height-100);
-      border: none;
-      border-radius: calc(var(--spectrum-corner-radius-100) - 2px);
-      background: transparent;
-      color: var(--spectrum-gray-800);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
-    }
-    .view-mode-btn:hover {
-      background: var(--spectrum-gray-200);
-    }
-    .view-mode-btn.active {
-      background: var(--spectrum-gray-25);
-      border: 2px solid var(--spectrum-gray-800);
-    }
-    .view-mode-btn svg {
-      width: var(--spectrum-static-size-200);
-      height: var(--spectrum-static-size-200);
-      fill: currentColor;
-    }
-    .view-mode-btn-text {
-      width: auto;
-      min-width: var(--spectrum-component-height-100);
-      padding: 0 var(--spectrum-spacing-200);
-      font-size: var(--spectrum-font-size-100);
-      font-weight: var(--spectrum-medium-font-weight);
-    }
-    .view-mode-switcher-content {
-      display: flex;
-      gap: 2px;
-    }
-    .view-mode-switcher-code {
-      display: none;
-      gap: 2px;
-    }
-    .exmod-preview.content-mode-code .view-mode-switcher-content {
-      display: none;
-    }
-    .exmod-preview.content-mode-code .view-mode-switcher-code {
-      display: flex;
-    }
     /* Actions button (replaces Upload content) */
     .actions-dropdown {
       position: relative;
@@ -1981,27 +2047,33 @@
     .exmod-preview.content-mode-code .actions-dropdown-code {
       display: inline-block;
     }
+    /* Spectrum Action Button – blue emphasis (accent fill) */
     .btn-actions {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: var(--spectrum-spacing-100);
       height: var(--spectrum-component-height-100);
-      padding: 0 var(--spectrum-spacing-300);
+      padding: 0 var(--spectrum-spacing-200);
       background: var(--spectrum-accent-background-color-default);
       color: var(--spectrum-gray-25);
-      border: var(--spectrum-border-width-100) solid var(--spectrum-accent-background-color-hover);
-      border-radius: 9999px;
+      border: var(--spectrum-border-width-100) solid transparent;
+      border-radius: var(--spectrum-corner-radius-100);
       font-size: var(--spectrum-font-size-100);
-      font-weight: var(--spectrum-bold-font-weight);
+      font-weight: var(--spectrum-medium-font-weight);
       cursor: pointer;
       white-space: nowrap;
       font-family: var(--spectrum-sans-serif-font-family);
-      transition: background-color 0.13s ease-out;
+      transition: background-color 0.13s ease-out, border-color 0.13s ease-out;
     }
     .btn-actions:hover {
       background: var(--spectrum-accent-background-color-hover);
-      border-color: var(--spectrum-accent-background-color-hover);
+    }
+    .btn-actions:active {
+      background: var(--spectrum-accent-background-color-hover);
+    }
+    .actions-dropdown.open .btn-actions {
+      background: var(--spectrum-accent-background-color-hover);
     }
     .btn-actions:focus-visible {
       outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
@@ -2027,9 +2099,10 @@
       background: var(--spectrum-gray-25);
       border: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
       border-radius: var(--spectrum-corner-radius-100);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       z-index: 100;
       overflow: hidden;
+      padding: var(--spectrum-spacing-75) 0;
     }
     .actions-dropdown-code .actions-dropdown-overlay {
       min-width: 220px;
@@ -2054,9 +2127,10 @@
       display: flex;
       align-items: center;
       gap: var(--spectrum-spacing-100);
-      padding: var(--spectrum-spacing-75) var(--spectrum-spacing-200);
+      padding: 6px 36px 3px 12px;
       font-size: var(--spectrum-font-size-100);
-      color: var(--spectrum-gray-700);
+      font-weight: var(--spectrum-bold-font-weight);
+      color: var(--spectrum-gray-900);
       white-space: nowrap;
     }
     .actions-dropdown-option.disabled {
@@ -2086,31 +2160,31 @@
       font-weight: var(--spectrum-bold-font-weight);
     }
     .actions-dropdown-divider {
-      height: 1px;
-      background: var(--spectrum-gray-200);
-      margin: 0;
+      height: 2px;
+      background: #d5d5d5;
+      margin: 6px 12px;
     }
     .actions-dropdown-option {
       display: flex;
       align-items: center;
-      gap: var(--spectrum-spacing-100);
+      gap: var(--spectrum-spacing-200);
       width: 100%;
       padding: var(--spectrum-spacing-100) var(--spectrum-spacing-200);
       border: none;
       background: transparent;
       font-size: var(--spectrum-font-size-100);
-      color: var(--spectrum-neutral-content-color-default);
+      color: var(--spectrum-gray-800);
       cursor: pointer;
       text-align: left;
       font-family: var(--spectrum-sans-serif-font-family);
       transition: background-color 0.13s ease-out;
     }
     .actions-dropdown-option:hover {
-      background: var(--spectrum-gray-75);
+      background: var(--spectrum-gray-100);
     }
     .actions-dropdown-option svg {
-      width: var(--spectrum-icon-size-100);
-      height: var(--spectrum-icon-size-100);
+      width: var(--spectrum-static-size-200);
+      height: var(--spectrum-static-size-200);
       fill: currentColor;
       flex-shrink: 0;
     }
@@ -2341,25 +2415,45 @@
             <!-- Toolbar -->
             <div class="content-toolbar">
               <div class="toolbar-left">
-                <div class="content-mode-switcher">
-                  <button type="button" class="content-mode-btn active" data-mode="content" data-tooltip="Content" aria-label="View content">
-                    <svg class="spectrum-icon-outline" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                <div class="view-mode-dropdown" id="view-mode-dropdown">
+                  <button type="button" class="view-mode-dropdown-trigger" id="view-mode-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="View mode">
+                    <span class="view-mode-dropdown-trigger-icon" id="view-mode-dropdown-trigger-icon" aria-hidden="true"></span>
+                    <span class="view-mode-dropdown-label" id="view-mode-dropdown-label">Preview</span>
+                    <svg class="view-mode-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                   </button>
-                  <button type="button" class="content-mode-btn" data-mode="code" data-tooltip="Code" aria-label="View code">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M17.7465,9.5305l-4.0965,4.16a.5.5,0,0,1-.70709.00541l-.00541-.00541-.4465-.4535a.503.503,0,0,1,0-.7L15.9715,9,12.492,5.4645a.503.503,0,0,1,0-.7l.4465-.4535a.5.5,0,0,1,.70709-.00541L13.651,4.311l4.0955,4.16A.76151.76151,0,0,1,17.7465,9.5305Z"/><path fill="currentColor" d="M.2535,8.4695,4.35,4.3095a.5.5,0,0,1,.70709-.00541l.00541.00541.4465.4535a.503.503,0,0,1,0,.7L2.0285,9,5.508,12.5355a.503.503,0,0,1,0,.7l-.4465.4535a.5.5,0,0,1-.70709.00541L4.349,13.689.2535,9.5305A.76151.76151,0,0,1,.2535,8.4695Z"/><path fill="currentColor" d="M7.7445,14.8435h-.572a.5.5,0,0,1-.483-.6295L9.7855,2.6935a.5.5,0,0,1,.483-.3705h.5525a.5.5,0,0,1,.483.627L8.2275,14.473A.5.5,0,0,1,7.7445,14.8435Z"/></svg>
-                  </button>
+                  <div class="view-mode-dropdown-overlay" id="view-mode-dropdown-overlay" role="listbox" aria-hidden="true">
+                    <div class="view-mode-dropdown-section">
+                      <div class="view-mode-dropdown-section-header">Content</div>
+                      <button type="button" class="view-mode-dropdown-option active" data-view-mode="content-preview" role="option">
+                        <svg class="view-mode-dropdown-option-icon" viewBox="0 0 18 18" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.5955,16.0715,14.323,13.8A4.5325,4.5325,0,1,0,12.8,15.323l2.273,2.2725a1.022,1.022,0,0,0,1.524,0A1.06653,1.06653,0,0,0,16.8905,17,1.08151,1.08151,0,0,0,16.5955,16.0715ZM7.706,11.49a2.784,2.784,0,1,1,2.784,2.784A2.784,2.784,0,0,1,7.706,11.49Z"/><path fill="currentColor" d="M16.5,2H1.5a.5.5,0,0,0-.5.5v13a.5.5,0,0,0,.5.5H7.116a5.66068,5.66068,0,0,1-1.034-1H2V5H16v8.8885l1,.995V2.5A.5.5,0,0,0,16.5,2Z"/></svg>
+                        Preview
+                        <span class="view-mode-dropdown-option-shortcut" aria-hidden="true">1</span>
+                      </button>
+                      <button type="button" class="view-mode-dropdown-option" data-view-mode="content-document" role="option">
+                        <svg class="view-mode-dropdown-option-icon" viewBox="0 0 18 18" focusable="false" aria-hidden="true"><polygon fill="currentColor" points="10 1 10 6 15 6 10 1"/><path fill="currentColor" d="M9.5,7A.5.5,0,0,1,9,6.5V1H3.5a.5.5,0,0,0-.5.5v15a.5.5,0,0,0,.5.5h11a.5.5,0,0,0,.5-.5V7ZM13,14.75a.25.25,0,0,1-.25.25H5.25A.25.25,0,0,1,5,14.75v-.5A.25.25,0,0,1,5.25,14h7.5a.25.25,0,0,1,.25.25Zm0-2a.25.25,0,0,1-.25.25H5.25A.25.25,0,0,1,5,12.75v-.5A.25.25,0,0,1,5.25,12h7.5a.25.25,0,0,1,.25.25Zm0-2a.25.25,0,0,1-.25.25H5.25A.25.25,0,0,1,5,10.75v-.5A.25.25,0,0,1,5.25,10h7.5a.25.25,0,0,1,.25.25Z"/></svg>
+                        Document
+                        <span class="view-mode-dropdown-option-shortcut" aria-hidden="true">2</span>
+                      </button>
+                    </div>
+                    <div class="view-mode-dropdown-section">
+                      <div class="view-mode-dropdown-section-header">Code</div>
+                      <button type="button" class="view-mode-dropdown-option" data-view-mode="code-files" role="option">
+                        <svg class="view-mode-dropdown-option-icon" viewBox="0 0 18 18" focusable="false" aria-hidden="true"><path fill="currentColor" d="M17.7465,9.5305l-4.0965,4.16a.5.5,0,0,1-.70709.00541l-.00541-.00541-.4465-.4535a.503.503,0,0,1,0-.7L15.9715,9,12.492,5.4645a.503.503,0,0,1,0-.7l.4465-.4535a.5.5,0,0,1,.70709-.00541L13.651,4.311l4.0955,4.16A.76151.76151,0,0,1,17.7465,9.5305Z"/><path fill="currentColor" d="M.2535,8.4695,4.35,4.3095a.5.5,0,0,1,.70709-.00541l.00541.00541.4465.4535a.503.503,0,0,1,0,.7L2.0285,9,5.508,12.5355a.503.503,0,0,1,0,.7l-.4465.4535a.5.5,0,0,1-.70709.00541L4.349,13.689.2535,9.5305A.76151.76151,0,0,1,.2535,8.4695Z"/><path fill="currentColor" d="M7.7445,14.8435h-.572a.5.5,0,0,1-.483-.6295L9.7855,2.6935a.5.5,0,0,1,.483-.3705h.5525a.5.5,0,0,1,.483.627L8.2275,14.473A.5.5,0,0,1,7.7445,14.8435Z"/></svg>
+                        Files
+                        <span class="view-mode-dropdown-option-shortcut" aria-hidden="true">3</span>
+                      </button>
+                      <button type="button" class="view-mode-dropdown-option" data-view-mode="code-changes" role="option">
+                        <svg class="view-mode-dropdown-option-icon" viewBox="0 0 16 16" focusable="false" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"/></svg>
+                        Changes
+                        <span class="view-mode-dropdown-option-shortcut" aria-hidden="true">4</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="page-title" id="document-tree-toggle" role="button" tabindex="0" aria-label="Toggle document tree" aria-expanded="true">ups-accelerates-intra-asia-trade-with-capacity-and-speed-enhance</h3>
               </div>
               <div class="toolbar-right">
-                <button class="btn-add-to-chat" type="button" id="add-to-chat-btn" aria-label="Add to chat">
-                  <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.75 2h-8C7.507 2 6.5 3.007 6.5 4.25v.5c0 .414.336.75.75.75S8 5.164 8 4.75v-.5c0-.413.337-.75.75-.75h8c.413 0 .75.338.75.75v4.5c0 .413-.337.75-.75.75H16c-.414 0-.75.336-.75.75v1.651L13.5 10.36V9.25C13.5 8.007 12.493 7 11.25 7h-8C2.007 7 1 8.007 1 9.25v4.5C1 14.99 2.01 16 3.25 16v2.137c0 .383.228.723.58.869q.182.073.365.072c.239 0 .466-.089.618-.245L8.033 16h3.217c1.243 0 2.25-1.007 2.25-2.25v-1.393l1.64 1.444c.18.18.42.275.665.275.122 0 .246-.023.364-.072.352-.147.581-.486.581-.867V11C17.99 11 19 9.99 19 8.75v-4.5C19 3.007 17.993 2 16.75 2M12 13.75c0 .413-.337.75-.75.75H7.467L4.75 16.894V15.25c0-.414-.336-.75-.75-.75h-.75c-.412 0-.75-.337-.75-.75v-4.5c0-.412.338-.75.75-.75h8c.413 0 .75.338.75.75z"/></svg>
-                  Add to chat
-                </button>
                 <div class="toolbar-preview-only">
-                  <button class="toolbar-icon-btn" type="button" data-tooltip="Picker" aria-label="Picker">
-                    <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M18.074 1.6c-.528-.44-1.192-.654-1.883-.587-.685.061-1.306.386-1.745.912-.036.043-5.03 6.019-6.693 8.012-.344.016-.693.067-1.042.164-1.973.546-2.687 2.232-3.315 3.718-.501 1.184-.975 2.302-2.003 2.859-.287.154-.44.476-.38.797.06.319.318.564.641.606.936.12 1.977.208 3.024.208 2.16 0 4.351-.372 5.72-1.594.925-.825 1.385-1.937 1.366-3.306-.001-.063-.02-.122-.024-.184l1.206-1.443c2.103-2.517 5.381-6.443 5.455-6.53.912-1.09.765-2.72-.327-3.631M9.4 15.576c-1.052.94-3.109 1.345-5.865 1.18.554-.725.91-1.57 1.241-2.35.57-1.345 1.06-2.506 2.335-2.86.875-.24 1.732-.112 2.354.353.5.375.79.926.799 1.512.012.927-.27 1.636-.864 2.165m7.853-11.308c-.043.05-3.345 4.002-5.458 6.533l-.634.76c-.218-.32-.472-.619-.797-.862-.273-.204-.574-.36-.89-.484 2.01-2.407 6.059-7.251 6.122-7.325.183-.221.443-.357.73-.383.292-.023.566.062.787.247.456.38.518 1.061.14 1.514"/></svg>
-                  </button>
                   <button class="toolbar-icon-btn" type="button" data-tooltip="Refresh" aria-label="Refresh">
                     <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="M18.207 3.897c-.406-.094-.809.15-.906.554l-.38 1.575C15.523 3.594 12.919 2.02 10 2.02c-3.685 0-6.875 2.5-7.76 6.08-.099.403.147.81.55.909.4.1.808-.147.907-.55.718-2.907 3.31-4.939 6.303-4.939 2.517 0 4.735 1.447 5.809 3.633l-2.102-.508c-.404-.094-.808.15-.906.553s.15.808.553.905l3.245.785c.125.088.274.142.432.142q.09 0 .18-.021c.048-.012.086-.041.13-.061.069-.019.142-.02.205-.058.17-.104.29-.27.338-.464l.875-3.624c.097-.403-.15-.808-.552-.906M17.21 11.032c-.396-.096-.807.147-.907.55-.718 2.908-3.31 4.94-6.303 4.94-2.517 0-4.735-1.447-5.81-3.634l2.103.508c.403.092.809-.15.906-.553s-.15-.808-.553-.905l-3.255-.787c-.171-.118-.385-.171-.602-.119-.015.004-.026.015-.04.02-.104.013-.205.044-.295.1-.17.103-.29.27-.338.463l-.875 3.624c-.097.403.15.808.552.906q.09.02.177.02c.339 0 .646-.23.729-.574l.38-1.575c1.398 2.432 4.002 4.005 6.921 4.005 3.685 0 6.876-2.5 7.76-6.08.099-.403-.147-.81-.549-.909"/></svg>
                   </button>
@@ -2383,28 +2477,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="view-mode-switcher">
-                  <div class="view-mode-switcher-content">
-                    <button class="view-mode-btn active" type="button" data-view-mode="preview" data-tooltip="Preview" aria-label="Preview">
-                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m19.28 18.222-1.973-1.974c.436-.64.693-1.414.693-2.246 0-2.206-1.794-4-4-4s-4 1.794-4 4 1.794 4 4 4c.833 0 1.605-.257 2.246-.693l1.974 1.973c.146.147.338.22.53.22s.384-.073.53-.22c.293-.293.293-.767 0-1.06m-7.78-4.22c0-1.379 1.121-2.5 2.5-2.5s2.5 1.121 2.5 2.5-1.121 2.5-2.5 2.5-2.5-1.121-2.5-2.5"/><path fill="currentColor" d="m16.34 5.28-3.62-3.62c-.418-.42-.998-.66-1.591-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18H9c.414 0 .75-.336.75-.75s-.336-.75-.75-.75H5.25c-.413 0-.75-.337-.75-.75V3.25c0-.413.337-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v.5c0 .414.336.75.75.75s.75-.336.75-.75V6.871c0-.592-.24-1.172-.66-1.59m-4.84.47V2.614c.055.032.113.06.158.106l3.622 3.62c.046.046.074.105.106.16H12.25c-.413 0-.75-.337-.75-.75"/></svg>
-                    </button>
-                    <button class="view-mode-btn" type="button" data-view-mode="document" data-tooltip="Document view" aria-label="Document view">
-                      <svg viewBox="0 0 20 20" focusable="false"><path fill="currentColor" d="m16.34 5.296-3.62-3.622c-.42-.42-1-.66-1.591-.66H5.25C4.01 1.015 3 2.025 3 3.265v12.484c0 1.24 1.01 2.25 2.25 2.25h9.5c1.24 0 2.25-1.01 2.25-2.25V6.887c0-.6-.234-1.166-.66-1.591m-1.06 1.06c.046.047.074.104.106.159H12.25c-.413 0-.75-.337-.75-.75V2.628c.055.033.114.06.16.106zm-.53 10.142h-9.5c-.413 0-.75-.337-.75-.75V3.265c0-.413.337-.75.75-.75H10v3.25c0 1.24 1.01 2.25 2.25 2.25h3.25v7.733c0 .413-.337.75-.75.75"/><path fill="currentColor" d="M13 11.498H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h6c.414 0 .75.336.75.75s-.336.75-.75.75M13 14.498H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h6c.414 0 .75.336.75.75s-.336.75-.75.75"/></svg>
-                    </button>
-                  </div>
-                  <div class="view-mode-switcher-code">
-                    <button class="view-mode-btn active" type="button" data-view-mode="files" data-tooltip="Files" aria-label="Files">
-                      <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.341 5.28 12.72 1.66c-.425-.426-.99-.66-1.59-.66H5.25C4.01 1 3 2.01 3 3.25v12.5C3 16.99 4.01 18 5.25 18h9.5c1.24 0 2.25-1.01 2.25-2.25V6.871c0-.592-.24-1.172-.659-1.59m-1.06 1.06c.045.046.073.105.105.16H12.25c-.414 0-.75-.337-.75-.75V2.614c.055.032.113.06.159.106zM14.75 16.5h-9.5c-.414 0-.75-.337-.75-.75V3.25c0-.413.336-.75.75-.75H10v3.25C10 6.99 11.01 8 12.25 8h3.25v7.75c0 .413-.336.75-.75.75"/></svg>
-                    </button>
-                    <button class="view-mode-btn" type="button" data-view-mode="changes" data-tooltip="Changes" aria-label="Changes">
-                      <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"/></svg>
-                    </button>
-                  </div>
-                </div>
+                <button class="btn-add-to-chat" type="button" id="add-to-chat-btn" data-tooltip="Add to chat" aria-label="Add to chat">
+                  <svg viewBox="0 0 18 18" focusable="false" aria-hidden="true"><path fill="currentColor" d="M7.375,14H4.793a.5.5,0,0,0-.3535.1465L3,15.5855V14.5a.5.5,0,0,0-.5-.5h-1a.5.5,0,0,1-.5-.5v-6A.5.5,0,0,1,1.5,7h8a.5.5,0,0,1,.5.5v.9465a6.12921,6.12921,0,0,1,1-.562V7.5A1.5,1.5,0,0,0,9.5,6h-8A1.5,1.5,0,0,0,0,7.5v6A1.5,1.5,0,0,0,1.5,15H2v2.3965a.25.25,0,0,0,.427.177L5,15H7.542A6.11074,6.11074,0,0,1,7.375,14Z"/><path fill="currentColor" d="M12,7.3v.242A6.1045,6.1045,0,0,1,17.8465,9.15,1.48587,1.48587,0,0,0,18,8.5v-6A1.5,1.5,0,0,0,16.5,1h-9A1.5,1.5,0,0,0,6,2.5V5H9.7A2.3,2.3,0,0,1,12,7.3Z"/><path fill="currentColor" d="M13.5,9.05a4.45,4.45,0,1,0,4.45,4.45A4.45,4.45,0,0,0,13.5,9.05Zm2.5,4.7a.25.25,0,0,1-.25.25H14v1.75a.25.25,0,0,1-.25.25h-.5a.25.25,0,0,1-.25-.25V14H11.25a.25.25,0,0,1-.25-.25v-.5a.25.25,0,0,1,.25-.25H13V11.25a.25.25,0,0,1,.25-.25h.5a.25.25,0,0,1,.25.25V13h1.75a.25.25,0,0,1,.25.25Z"/></svg>
+                </button>
                 <div class="actions-dropdown actions-dropdown-content" id="actions-dropdown-content">
-                  <button class="btn-actions" type="button" aria-label="Actions" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn-actions" type="button" aria-label="Sync" aria-haspopup="true" aria-expanded="false">
                     <svg viewBox="0 0 18 18" focusable="false" aria-hidden="true"><path fill="currentColor" d="M10.25,3.357A3.394,3.394,0,0,1,13.519,7.66a2.74688,2.74688,0,0,1,.3025-.017,2.6785,2.6785,0,0,1,0,5.357H3.107a1.6075,1.6075,0,0,1,0-3.2145h.1795v-.714a2.859,2.859,0,0,1,3.6-2.7595A3.394,3.394,0,0,1,10.25,3.357Zm0-1A4.4055,4.4055,0,0,0,6.1335,5.2145a3.862,3.862,0,0,0-3.845,3.703A2.607,2.607,0,0,0,3.107,14H13.8215a3.6785,3.6785,0,0,0,.8215-7.2645A4.4,4.4,0,0,0,10.25,2.357Z"/></svg>
-                    Actions
+                    Sync
                   </button>
                   <div class="actions-dropdown-overlay">
                     <button type="button" class="actions-dropdown-option" data-action="upload">
@@ -2422,9 +2501,9 @@
                   </div>
                 </div>
                 <div class="actions-dropdown actions-dropdown-code" id="actions-dropdown-code">
-                  <button class="btn-actions" type="button" aria-label="Actions" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn-actions" type="button" aria-label="Sync" aria-haspopup="true" aria-expanded="false">
                     <svg class="btn-actions-github-icon" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" focusable="false" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    Actions
+                    Sync
                   </button>
                   <div class="actions-dropdown-overlay" id="actions-dropdown-code-overlay">
                     <button type="button" class="actions-dropdown-option" data-action="push" id="github-action-push">
@@ -2472,19 +2551,19 @@
                 <div class="document-tree-inner">
                 <div class="tree-breadcrumbs">
                   <span class="crumb">Content</span>
-                  <span class="breadcrumb-sep">&rsaquo;</span>
+                  <span class="breadcrumb-sep"><svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 18 18" width="18" focusable="false" aria-hidden="true"><path fill="#464646" d="M12,9a.994.994,0,0,1-.2925.7045l-3.9915,3.99a1,1,0,1,1-1.4355-1.386l.0245-.0245L9.5905,9,6.3045,5.715A1,1,0,0,1,7.691,4.28l.0245.0245,3.9915,3.99A.994.994,0,0,1,12,9Z"/></svg></span>
                   <div class="breadcrumb-path-dropdown" id="breadcrumb-path-dropdown">
                     <button type="button" class="breadcrumb-path-trigger" aria-label="Path" aria-haspopup="true" aria-expanded="false">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" focusable="false" aria-hidden="true" role="img"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.094-.566-.259L8.516 2.777C8.089 2.283 7.47 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.094.567.259L8.459 5H2.5v-.75c0-.413.337-.75.75-.75M17.5 14.75c0 .413-.337.75-.75.75H3.25c-.413 0-.75-.337-.75-.75V6.5h14.25c.413 0 .75.337.75.75z"></path><path fill="currentColor" d="M10 13.65c-.192 0-.384-.073-.53-.22l-3-3c-.293-.292-.293-.767 0-1.06s.767-.293 1.06 0L10 11.84l2.47-2.47c.293-.293.767-.293 1.06 0s.293.768 0 1.06l-3 3c-.146.147-.338.22-.53.22"></path></svg>
                     </button>
                     <div class="breadcrumb-path-overlay">
-                      <button type="button" class="breadcrumb-path-option">press-releases</button>
-                      <button type="button" class="breadcrumb-path-option">newsroom</button>
-                      <button type="button" class="breadcrumb-path-option">us</button>
-                      <button type="button" class="breadcrumb-path-option">en</button>
+                      <button type="button" class="breadcrumb-path-option"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>press-releases</button>
+                      <button type="button" class="breadcrumb-path-option"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>newsroom</button>
+                      <button type="button" class="breadcrumb-path-option"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>us</button>
+                      <button type="button" class="breadcrumb-path-option"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true"><path fill="currentColor" d="M16.75 5h-5.964c-.218 0-.424-.095-.567-.259L8.516 2.776C8.088 2.283 7.468 2 6.816 2H3.25C2.01 2 1 3.01 1 4.25v10.5C1 15.99 2.01 17 3.25 17h13.5c1.24 0 2.25-1.01 2.25-2.25v-7.5C19 6.01 17.99 5 16.75 5M3.25 3.5h3.565c.218 0 .424.095.567.259L8.458 5H2.5v-.75c0-.413.336-.75.75-.75M17.5 14.75c0 .413-.336.75-.75.75H3.25c-.414 0-.75-.337-.75-.75V6.5h14.25c.414 0 .75.337.75.75z"/></svg>en</button>
                     </div>
                   </div>
-                  <span class="breadcrumb-sep">&rsaquo;</span>
+                  <span class="breadcrumb-sep"><svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 18 18" width="18" focusable="false" aria-hidden="true"><path fill="#464646" d="M12,9a.994.994,0,0,1-.2925.7045l-3.9915,3.99a1,1,0,1,1-1.4355-1.386l.0245-.0245L9.5905,9,6.3045,5.715A1,1,0,0,1,7.691,4.28l.0245.0245,3.9915,3.99A.994.994,0,0,1,12,9Z"/></svg></span>
                   <span class="crumb crumb-current" style="font-weight:600;">our-company</span>
                 </div>
                 <div class="file-list">
@@ -2816,6 +2895,15 @@
           if (t) t.setAttribute('aria-expanded', 'false');
         }
       });
+      document.querySelectorAll('.view-mode-dropdown.open').forEach(function(d) {
+        if (d !== excludeEl) {
+          d.classList.remove('open');
+          var t = d.querySelector('.view-mode-dropdown-trigger');
+          if (t) t.setAttribute('aria-expanded', 'false');
+          var overlay = d.querySelector('.view-mode-dropdown-overlay');
+          if (overlay) overlay.setAttribute('aria-hidden', 'true');
+        }
+      });
     }
 
     // Viewport dropdown (Desktop / Tablet / Phone)
@@ -2830,11 +2918,11 @@
         phone: '<svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><circle cx="10" cy="15" r="1" fill="currentColor"/><path fill="currentColor" d="M13.75 19h-7.5C5.01 19 4 17.99 4 16.75V3.25C4 2.01 5.01 1 6.25 1h7.5C14.99 1 16 2.01 16 3.25v13.5c0 1.24-1.01 2.25-2.25 2.25M6.25 2.5c-.413 0-.75.337-.75.75v13.5c0 .413.337.75.75.75h7.5c.413 0 .75-.337.75-.75V3.25c0-.413-.337-.75-.75-.75z"/></svg>'
       };
       function setViewport(v) {
-        var label = v.charAt(0).toUpperCase() + v.slice(1);
         trigger.setAttribute('data-viewport', v);
-        trigger.setAttribute('aria-label', label);
-        trigger.setAttribute('data-tooltip', label);
-        trigger.innerHTML = icons[v];
+        trigger.setAttribute('aria-label', 'Viewport');
+        trigger.setAttribute('data-tooltip', 'Viewport');
+        var svg = trigger.querySelector('svg');
+        if (svg) svg.outerHTML = icons[v];
       }
       trigger.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -2849,6 +2937,7 @@
           trigger.setAttribute('aria-expanded', 'false');
         });
       });
+      setViewport(trigger.getAttribute('data-viewport') || 'desktop');
       document.addEventListener('click', function() {
         dropdown.classList.remove('open');
         trigger.setAttribute('aria-expanded', 'false');
@@ -3043,13 +3132,25 @@
     var documentTreeToggle = document.getElementById('document-tree-toggle');
     var previewContent = document.getElementById('preview-content');
     var previewCode = document.getElementById('preview-code');
-    if (documentTreeToggle) {
+    var codeTree = document.querySelector('.code-tree');
+    if (documentTreeToggle && previewCode && codeTree) {
+      codeTree.addEventListener('transitionend', function(e) {
+        if (e.propertyName === 'width' && previewCode.classList.contains('code-tree-collapsed')) {
+          codeTree.classList.add('code-tree-fully-hidden');
+        }
+      });
       documentTreeToggle.addEventListener('click', function() {
         var exmod = document.getElementById('exmod-preview');
         if (exmod && exmod.classList.contains('content-mode-code')) {
-          if (previewCode) {
-            var collapsed = previewCode.classList.toggle('code-tree-collapsed');
-            documentTreeToggle.setAttribute('aria-expanded', !collapsed);
+          if (previewCode.classList.contains('code-tree-collapsed')) {
+            codeTree.classList.remove('code-tree-fully-hidden');
+            requestAnimationFrame(function() {
+              previewCode.classList.remove('code-tree-collapsed');
+              documentTreeToggle.setAttribute('aria-expanded', 'true');
+            });
+          } else {
+            previewCode.classList.add('code-tree-collapsed');
+            documentTreeToggle.setAttribute('aria-expanded', 'false');
           }
         } else if (previewContent) {
           var collapsed = previewContent.classList.toggle('tree-collapsed');
@@ -3063,35 +3164,26 @@
         }
       });
     }
-    // View mode switcher (Preview / Document view, or Files / Changes in code mode)
+    // View mode dropdown – Content/Code + sub-options
     var contentToolbar = document.querySelector('.content-toolbar');
-    document.querySelectorAll('.view-mode-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        var mode = this.getAttribute('data-view-mode');
-        if (mode) {
-          var switcher = this.closest('.view-mode-switcher');
-          var group = this.closest('.view-mode-switcher-content') || this.closest('.view-mode-switcher-code');
-          if (group) {
-            group.querySelectorAll('.view-mode-btn[data-view-mode]').forEach(b => b.classList.remove('active'));
-          } else {
-            switcher.querySelectorAll('.view-mode-btn[data-view-mode]').forEach(b => b.classList.remove('active'));
-          }
-          this.classList.add('active');
-        }
-        if (contentToolbar && (mode === 'preview' || mode === 'document')) {
-          contentToolbar.classList.toggle('view-mode-document', mode === 'document');
-        }
-        var previewCode = document.getElementById('preview-code');
-        if (previewCode && (mode === 'files' || mode === 'changes')) {
-          previewCode.classList.toggle('code-view-changes', mode === 'changes');
-        }
-      });
-    });
-    // Content / Code mode switcher – swap panels so only the active one is in the slot
     var exmodPreview = document.getElementById('exmod-preview');
     var previewSlot = document.getElementById('preview-slot');
     var previewPool = document.getElementById('preview-panels-pool');
     var pageTitle = document.querySelector('.page-title');
+    var viewModeDropdown = document.getElementById('view-mode-dropdown');
+    var viewModeTrigger = document.getElementById('view-mode-dropdown-trigger');
+    var viewModeLabel = document.getElementById('view-mode-dropdown-label');
+    var viewModeTriggerIcon = document.getElementById('view-mode-dropdown-trigger-icon');
+    var viewModeOverlay = document.getElementById('view-mode-dropdown-overlay');
+
+    var VIEW_MODE_LABELS = {
+      'content-preview': 'Preview',
+      'content-document': 'Document',
+      'code-files': 'Files',
+      'code-changes': 'Changes'
+    };
+    var VIEW_MODE_KEYS = ['content-preview', 'content-document', 'code-files', 'code-changes'];
+
     function swapPreviewPanel(toCode) {
       if (!previewSlot || !previewPool) return;
       var contentPanel = document.getElementById('preview-content');
@@ -3110,36 +3202,102 @@
         previewSlot.appendChild(contentPanel);
       }
     }
-    document.querySelectorAll('.content-mode-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        var switcher = this.closest('.content-mode-switcher');
-        switcher.querySelectorAll('.content-mode-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        if (exmodPreview) {
-          var toCode = this.getAttribute('data-mode') === 'code';
-          swapPreviewPanel(toCode);
-          if (toCode) {
-            exmodPreview.classList.add('content-mode-code');
-            var previewCode = document.getElementById('preview-code');
-            if (previewCode) previewCode.classList.remove('code-tree-collapsed');
-            var documentTreeToggle = document.getElementById('document-tree-toggle');
-            if (documentTreeToggle) documentTreeToggle.setAttribute('aria-expanded', 'true');
-            if (pageTitle) {
-              var codeFile = document.querySelector('.code-tree-item.file.selected .code-tree-name');
-              if (codeFile) pageTitle.textContent = codeFile.textContent;
-            }
-            if (contentToolbar && document.querySelector('.code-tree-item.file.selected')) contentToolbar.classList.add('code-file-selected');
-          } else {
-            exmodPreview.classList.remove('content-mode-code');
-            if (contentToolbar) contentToolbar.classList.remove('code-file-selected');
-            if (pageTitle) {
-              var contentFile = document.querySelector('.file-item.selected .file-name');
-              if (contentFile) pageTitle.textContent = (contentFile.getAttribute('data-full-title') || contentFile.textContent).trim();
-            }
+
+    function setViewMode(mode) {
+      if (!mode || !VIEW_MODE_LABELS[mode]) return;
+      var toCode = mode.startsWith('code-');
+      var isDocument = mode === 'content-document';
+      var isChanges = mode === 'code-changes';
+
+      document.querySelectorAll('.view-mode-dropdown-option').forEach(function(opt) {
+        opt.classList.toggle('active', opt.getAttribute('data-view-mode') === mode);
+      });
+      if (viewModeLabel) viewModeLabel.textContent = VIEW_MODE_LABELS[mode];
+      if (viewModeTriggerIcon) {
+        var activeOpt = document.querySelector('.view-mode-dropdown-option[data-view-mode="' + mode + '"]');
+        var iconSvg = activeOpt ? activeOpt.querySelector('.view-mode-dropdown-option-icon') : null;
+        viewModeTriggerIcon.innerHTML = '';
+        if (iconSvg) {
+          var clone = iconSvg.cloneNode(true);
+          clone.removeAttribute('class');
+          viewModeTriggerIcon.appendChild(clone);
+        }
+      }
+
+      if (exmodPreview) {
+        swapPreviewPanel(toCode);
+        if (toCode) {
+          exmodPreview.classList.add('content-mode-code');
+          var previewCode = document.getElementById('preview-code');
+          if (previewCode) {
+            previewCode.classList.toggle('code-view-changes', isChanges);
+          }
+          var documentTreeToggle = document.getElementById('document-tree-toggle');
+          if (documentTreeToggle && previewCode) {
+            documentTreeToggle.setAttribute('aria-expanded', !previewCode.classList.contains('code-tree-collapsed'));
+          }
+          if (pageTitle) {
+            var codeFile = document.querySelector('.code-tree-item.file.selected .code-tree-name');
+            if (codeFile) pageTitle.textContent = codeFile.textContent;
+          }
+          if (contentToolbar && document.querySelector('.code-tree-item.file.selected')) contentToolbar.classList.add('code-file-selected');
+        } else {
+          exmodPreview.classList.remove('content-mode-code');
+          if (contentToolbar) contentToolbar.classList.remove('code-file-selected');
+          if (pageTitle) {
+            var contentFile = document.querySelector('.file-item.selected .file-name');
+            if (contentFile) pageTitle.textContent = (contentFile.getAttribute('data-full-title') || contentFile.textContent).trim();
           }
         }
+      }
+      if (contentToolbar) contentToolbar.classList.toggle('view-mode-document', isDocument);
+    }
+
+    if (viewModeTrigger && viewModeOverlay) {
+      viewModeTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeAllDropdowns(viewModeDropdown);
+        var isOpen = viewModeDropdown.classList.toggle('open');
+        viewModeTrigger.setAttribute('aria-expanded', isOpen);
+        viewModeOverlay.setAttribute('aria-hidden', !isOpen);
+      });
+      document.addEventListener('click', function() {
+        if (viewModeDropdown) {
+          viewModeDropdown.classList.remove('open');
+          if (viewModeTrigger) viewModeTrigger.setAttribute('aria-expanded', 'false');
+          if (viewModeOverlay) viewModeOverlay.setAttribute('aria-hidden', 'true');
+        }
+      });
+      viewModeOverlay.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+
+    document.querySelectorAll('.view-mode-dropdown-option').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var mode = this.getAttribute('data-view-mode');
+        setViewMode(mode);
+        if (viewModeDropdown) viewModeDropdown.classList.remove('open');
+        if (viewModeTrigger) viewModeTrigger.setAttribute('aria-expanded', 'false');
+        if (viewModeOverlay) viewModeOverlay.setAttribute('aria-hidden', 'true');
       });
     });
+
+    document.addEventListener('keydown', function(e) {
+      var target = e.target;
+      var tag = (target && target.tagName) ? target.tagName.toLowerCase() : '';
+      if (tag === 'textarea' || tag === 'input' || (target && target.isContentEditable)) return;
+      var key = e.key;
+      if (key >= '1' && key <= '4') {
+        var idx = parseInt(key, 10) - 1;
+        var mode = VIEW_MODE_KEYS[idx];
+        if (mode) {
+          setViewMode(mode);
+          e.preventDefault();
+        }
+      }
+    });
+
+    setViewMode('content-preview');
 
     // Code tree: build from file list, expand/collapse and selection
     (function() {
@@ -3297,7 +3455,7 @@
     var taskStopped = false;
     function resetTaskProgress() {
       if (taskProgressToggle) {
-        taskProgressToggle.innerHTML = '<h3>Experience Modernization Agent</h3>';
+        taskProgressToggle.innerHTML = '';
         taskProgressToggle.classList.add('task-progress-header-stopped');
         taskProgressToggle.removeAttribute('role');
         taskProgressToggle.removeAttribute('tabindex');
