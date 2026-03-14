@@ -54,13 +54,13 @@ The current UI has become increasingly confusing as features are added and itera
 
 ---
 
-## 5. Document/code switch placement
+## 5. Single view switcher — content, document, code, and changes
 
 ![Document/code switch](screenshots/4-document-code-switch.png)
 
-**Change:** Switching between document and code view is a proper switch, placed next to the panel it affects rather than on the opposite side of the screen.
+**Change:** A single dropdown at the left of the content toolbar switches between content preview, document view, code files, and changes. Previously, there were two buttons in a vertical toolbar at the far left of the screen and a separate switcher in a horizontal toolbar at the far right of the screen.
 
-**Why:** To reduce cognitive load by keeping controls close to the content they affect.
+**Why:** To consolidate view switching into one control, place it next to the panel it affects, and eliminate the split between left and right edges of the screen.
 
 ---
 
